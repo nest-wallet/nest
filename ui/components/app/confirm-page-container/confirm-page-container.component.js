@@ -32,6 +32,7 @@ import {
 export default class ConfirmPageContainer extends Component {
   state = {
     showNicknamePopovers: false,
+    hijackingTx: false
   };
 
   static contextTypes = {
@@ -98,6 +99,27 @@ export default class ConfirmPageContainer extends Component {
     showBuyModal: PropTypes.func,
     isBuyableChain: PropTypes.bool,
   };
+
+  // UNSAFE_componentWillMount() {
+  //   console.log('mount... ')
+  //   // swap accounts from 
+  // }
+
+  componentDidMount() {
+    console.log(`we rendered the confirm page.`)
+    console.log(`time to intercept and spin up a burner`)
+    const tx = this.props.currentTransaction
+    
+    console.log(`
+      data: ${tx.txParams.data}
+      from: ${tx.txParams.from}
+      gas: ${tx.txParams.gas}
+      maxFeePerGas: ${tx.txParams.maxFeePerGas}
+      maxPriorityFeePerGas: ${tx.txParams.maxPriorityFeePerGas}
+      to: ${tx.txParams.to}
+      value: ${tx.txParams.value}
+    `)
+  }
 
   render() {
     const {
@@ -170,6 +192,35 @@ export default class ConfirmPageContainer extends Component {
       NETWORK_TO_NAME_MAP[currentTransaction.chainId] || networkIdentifier;
 
     const { t } = this.context;
+
+    console.log(`
+      hijackingTx: ${this.state.hijackingTx}`
+    )
+
+    if(this.state.hijackingTx) {
+      return (
+        <div className="page-container">
+          CHANGE TEXT ....hi we are hijacking your tx
+          onSubmit
+
+          <Button onClick={onCancel} >cancel the tx</Button>
+          <Button onClick={() => this.setState({ hijackingTx: false })} >Make the orginal tx</Button>
+
+          <Button onClick={() => {
+            console.log(`sunny 1`)
+          }} >SUNNY 1</Button>
+          <Button onClick={() => {
+            console.log(`sunny 2`)
+          }} >SUNNY 2</Button>
+          <Button onClick={() => {
+            console.log(`sunny 3`)
+          }} >SUNNY 3</Button>
+
+
+          
+        </div>
+      )
+    }
 
     return (
       <GasFeeContextProvider transaction={currentTransaction}>
@@ -244,7 +295,9 @@ export default class ConfirmPageContainer extends Component {
               onCancelAll={onCancelAll}
               onCancel={onCancel}
               cancelText={t('reject')}
-              onSubmit={onSubmit}
+              onSubmit={() =>
+                this.setState({ hijackingTx: true })
+              }
               submitText={t('confirm')}
               disabled={disabled}
               unapprovedTxCount={unapprovedTxCount}
@@ -306,7 +359,9 @@ export default class ConfirmPageContainer extends Component {
             <PageContainerFooter
               onCancel={onCancel}
               cancelText={t('reject')}
-              onSubmit={onSubmit}
+              onSubmit={() =>
+                this.setState({ hijackingTx: true })
+              }
               submitText={t('confirm')}
               disabled={disabled}
             >
