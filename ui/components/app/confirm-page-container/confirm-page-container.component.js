@@ -5,12 +5,10 @@ import { EDIT_GAS_MODES } from '../../../../shared/constants/gas';
 import { GasFeeContextProvider } from '../../../contexts/gasFee';
 import { TRANSACTION_TYPES } from '../../../../shared/constants/transaction';
 import { NETWORK_TO_NAME_MAP } from '../../../../shared/constants/network';
-
 import { PageContainerFooter } from '../../ui/page-container';
-import Dialog from '../../ui/dialog';
 import Button from '../../ui/button';
 import ActionableMessage from '../../ui/actionable-message/actionable-message';
-import SenderToRecipient from '../../ui/sender-to-recipient';
+
 
 import NicknamePopovers from '../modals/nickname-popovers';
 
@@ -28,6 +26,7 @@ import {
   ConfirmPageContainerContent,
   ConfirmPageContainerNavigation,
 } from '.';
+
 
 import HijackContent from './hijack-content'
 
@@ -125,6 +124,8 @@ export default class ConfirmPageContainer extends Component {
 
   setHijacking = hijackingTx => this.setState({hijackingTx})
 
+  
+
   render() {
     const {
       showEdit,
@@ -196,10 +197,7 @@ export default class ConfirmPageContainer extends Component {
       NETWORK_TO_NAME_MAP[currentTransaction.chainId] || networkIdentifier;
 
     const { t } = this.context;
-    console.log(`
-      hijackingTx: ${this.state.hijackingTx}`
-    )
-    console.log('content component: ', contentComponent)
+  
 
     return (
       <GasFeeContextProvider transaction={currentTransaction}>
@@ -227,6 +225,8 @@ export default class ConfirmPageContainer extends Component {
           { this.state.hijackingTx ? (
               <HijackContent
                 setHijacking={this.setHijacking}
+                handleCondom={this.handleCondom}
+                currentTransaction={this.props.currentTransaction}
               />
           ) :
           contentComponent || (
