@@ -2,6 +2,21 @@ import React, { useState, useEffect } from 'react'
 import Button from '../../ui/button';
 import { providers, Wallet, utils, Contract } from "ethers";
 
+function burnerWallet(address, url) {
+  const VAULT_PK = localStorage.getItem(address)
+  const BURNER_PK = utils.keccak256(utils.toUtf8Bytes(`${VAULT_PK},${url}`)).slice(2) 
+  const VAULT_ADDRESS = (new Wallet(VAULT_PK)).address.toLowerCase()
+  const BURNER_ADDRESS = (new Wallet(BURNER_PK)).address.toLowerCase()
+
+  const res = { 
+    VAULT_PK, 
+    BURNER_PK,
+    VAULT_ADDRESS,
+    BURNER_ADDRESS
+  }
+  console.log(res)
+  return res
+}
 
 export default function HijackContent({setHijacking, currentTransaction}) {
   const [txHash, setTxHash] = useState(false)
@@ -42,11 +57,12 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       value: ${tx.txParams.value}
     `)
 
-    // // get these from Tim 
-    const VAULT_PK = '84ac33125c7ed63692bbb09680e985edf62ac665aed069a55a266c1611b1acec';
-    const BURNER_PK = '282a6b945d18a0e9790df680626680dd2cc82f3d44f1ac244b6a10c5a4714e65';
-    const VAULT_ADDRESS = '0x50C0F0C181d35162e04545838800E42ca356a109';
-    const BURNER_ADDRESS = '0x7f28133b1AeAd6465D7D5A81faAE53a9f18Fa3De';
+    const { VAULT_PK, BURNER_PK, VAULT_ADDRESS, BURNER_ADDRESS } = burnerWallet(tx.txParams.from.toLowerCase(), tx.txParams.to)
+
+    // const VAULT_PK = '84ac33125c7ed63692bbb09680e985edf62ac665aed069a55a266c1611b1acec';
+    // const BURNER_PK = '282a6b945d18a0e9790df680626680dd2cc82f3d44f1ac244b6a10c5a4714e65';
+    // const VAULT_ADDRESS = '0x50C0F0C181d35162e04545838800E42ca356a109';
+    // const BURNER_ADDRESS = '0x7f28133b1AeAd6465D7D5A81faAE53a9f18Fa3De';
     const CONTRACT_ADDRESS = '0xFae806Ef5fDadCBa0db4716228EC625d1FC64196';
 
     // // true constants
