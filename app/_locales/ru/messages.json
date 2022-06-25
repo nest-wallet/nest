@@ -435,10 +435,10 @@
     "description": "$1 represents the crypto symbol to be purchased"
   },
   "buyWithWyre": {
-    "message": "Купить $1 с помощью Wyre"
+    "message": "Купить 1 $ с помощью Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre позволяет использовать дебетовую карту для внесения $1 прямо на ваш счет MetaMask."
+    "message": "Простая регистрация для покупок на сумму до 1000 $. Быстрая интерактивная проверка покупки с высоким лимитом. Поддерживает дебетовые/кредитные карты, Apple Pay, банковские переводы. Доступно в более чем 100 странах. Токены зачисляются на ваш счет MetaMask"
   },
   "bytes": {
     "message": "Байты"
@@ -2062,6 +2062,9 @@
   "nextNonceWarning": {
     "message": "Одноразовый номер больше, чем предложенный одноразовый номер $1",
     "description": "The next nonce according to MetaMask's internal logic"
+  },
+  "nft": {
+    "message": "NFT"
   },
   "nftTokenIdPlaceholder": {
     "message": "Введите ид. коллекционного актива"

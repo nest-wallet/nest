@@ -438,7 +438,7 @@
     "message": "Mua $1 qua Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre cho phép bạn dùng thẻ ghi nợ để nạp $1 trực tiếp vào tài khoản MetaMask của mình."
+    "message": "Dễ dàng tham gia đối với các giao dịch mua lên đến $1.000. Xác minh mua hàng giới hạn cao và tương tác nhanh. Hỗ trợ Thẻ Tín dụng/Ghi nợ, Apple Pay, Chuyển khoản Ngân hàng. Hiện có tại hơn 100 quốc gia. Nạp token vào Tài khoản MetaMask của bạn"
   },
   "bytes": {
     "message": "Byte"
@@ -650,7 +650,7 @@
     "message": "Tương tác với hợp đồng"
   },
   "convertTokenToNFTDescription": {
-    "message": "Chúng tôi phát hiện tài sản này là một NFT. MetaMask hiện đã hỗ trợ gốc đầy đủ cho NFT. Bạn có muốn xóa tài sản khỏi danh sách token và thêm tài sản dưới dạng NFT không?"
+    "message": "Chúng tôi phát hiện tài sản này là một NFT. MetaMask hiện đã hỗ trợ toàn diện và đầy đủ cho NFT. Bạn có muốn xóa tài sản khỏi danh sách token và thêm tài sản dưới dạng NFT không?"
   },
   "convertTokenToNFTExistDescription": {
     "message": "Chúng tôi phát hiện tài sản này đã được thêm dưới dạng NFT. Bạn có muốn xóa tài sản khỏi danh sách token không?"
@@ -2063,6 +2063,9 @@
     "message": "Số chỉ dùng một lần lớn hơn số chỉ dùng một lần gợi ý là $1",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "Nhập ID bộ sưu tập"
   },
@@ -2158,7 +2161,7 @@
     "message": "Bật chế độ tối"
   },
   "notifications12Description": {
-    "message": "Chế độ tối sẽ được kích hoạt dành cho người dùng mới tùy theo tùy chọn hệ thống của họ. Đối với người dùng hiện tại, có thể bật Chế độ tối theo cách thủ công trong phần Cài đặt -> Thử nghiệm."
+    "message": "Tiện ích Chế độ tối hiện đã ra mắt! Để bật, hãy vào Cài đặt -> Thử nghiệm và chọn một trong các tùy chọn hiển thị: Sáng, Tối, Hệ thống."
   },
   "notifications12Title": {
     "message": "Dùng chế độ tối khi nào? Ngay bây giờ! 🕶️🦊"

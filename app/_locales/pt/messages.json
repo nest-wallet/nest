@@ -435,10 +435,10 @@
     "description": "$1 represents the crypto symbol to be purchased"
   },
   "buyWithWyre": {
-    "message": "Comprar $1 com Wyre"
+    "message": "Comprar $1 com o Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Com o Wyre, você pode usar um cartão de débito para depositar $1 diretamente na sua conta da MetaMask."
+    "message": "Integração fácil para compras de até US$ 1.000. Verificação de compra de alto limite rápida e interativa. Aceita cartão de crédito/débito, Apple Pay, transferências bancárias. Disponível em mais de 100 países. Depósito de tokens em sua conta na MetaMask"
   },
   "bytes": {
     "message": "Bytes"
@@ -650,7 +650,7 @@
     "message": "Interação com contrato"
   },
   "convertTokenToNFTDescription": {
-    "message": "Detectamos que esse ativo é um NFT. A MetaMask agora oferece suporte nativo a NFTs. Gostaria de removê-lo da sua lista de tokens e adicioná-lo como NFT?"
+    "message": "Detectamos que esse ativo é um NFT. A MetaMask agora oferece suporte nativo a NFTs. Gostaria de removê-lo de sua lista de tokens e adicioná-lo como NFT?"
   },
   "convertTokenToNFTExistDescription": {
     "message": "Detectamos que esse ativo foi adicionado como NFT. Deseja removê-lo da sua lista de tokens?"
@@ -2063,6 +2063,9 @@
     "message": "Nonce é maior que o nonce sugerido de $1",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "Insira o ID do token"
   },
@@ -2158,7 +2161,7 @@
     "message": "Ativar o modo escuro"
   },
   "notifications12Description": {
-    "message": "O Modo Escuro será ativado para novos usuários de acordo com suas preferências de sistema. Para usuários antigos, ative o Modo Escuro manualmente em Configurações -> Experimental."
+    "message": "O modo escuro na extensão finalmente chegou! Para ativá-lo, acesse Configurações -> Experimental e selecione uma das opções de exibição: claro, escuro, sistema."
   },
   "notifications12Title": {
     "message": "Modo escuro quando? Modo escuro agora! 🕶️🦊"
@@ -3970,7 +3973,7 @@
     "description": "$1 is the action type. e.g (Account, Transaction, Swap)"
   },
   "visitWebSite": {
-    "message": "Visite o nosso site"
+    "message": "Visite nosso site"
   },
   "walletConnectionGuide": {
     "message": "nosso guia de conexão com a carteira de hardware"

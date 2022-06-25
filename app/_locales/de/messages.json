@@ -438,7 +438,7 @@
     "message": "$1 mit Wyre kaufen"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre ermöglicht Ihnen die Verwendung einer Kreditkarte zum direkten Einzahlen von $1 auf Ihr MetaMask-Konto."
+    "message": "Einfaches Onboarding für Käufe bis zu 1000 $. Schnelle interaktive Überprüfung von Käufen mit hohem Limit. Unterstützt Debit-/Kreditkarte, Apple Pay, Banküberweisungen. Verfügbar in über 100 Ländern. Einzahlung von Token auf Ihr MetaMask-Konto"
   },
   "bytes": {
     "message": "Bytes"
@@ -2063,6 +2063,9 @@
     "message": "Nonce ist höher als vorgeschlagen nonce von $1",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "Token-ID eingeben"
   },
@@ -2266,7 +2269,7 @@
     "message": "Alle als gelesen markieren"
   },
   "numberOfNewTokensDetected": {
-    "message": "$1 neue Tokens in diesem Konto gefunden\n",
+    "message": "$1 neue Tokens in diesem Konto gefunden",
     "description": "$1 is the number of new tokens detected"
   },
   "ofTextNofM": {
@@ -3079,7 +3082,7 @@
     "message": "Status"
   },
   "statusConnected": {
-    "message": "Verbunden"
+    "message": "Verbinden"
   },
   "statusNotConnected": {
     "message": "Nicht verbunden"
@@ -3970,7 +3973,7 @@
     "description": "$1 is the action type. e.g (Account, Transaction, Swap)"
   },
   "visitWebSite": {
-    "message": "Gehe zu unserer Webseite"
+    "message": "Besuchen Sie unsere Webseite"
   },
   "walletConnectionGuide": {
     "message": "unsere Hardware-Wallet-Verbindungsanleitung"

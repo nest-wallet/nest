@@ -435,10 +435,10 @@
     "description": "$1 represents the crypto symbol to be purchased"
   },
   "buyWithWyre": {
-    "message": "Wyreで $1 を購入"
+    "message": "Wyreで$1を購入"
   },
   "buyWithWyreDescription": {
-    "message": "Wyreを使用すると、デビット カードを使用して、$1 をMetaMaskアカウントに直接デポジットできます。"
+    "message": "簡単なオンボーディングプロセスで最高 $ 1000 購入可能。迅速かつインタラクティブな高限度額の購入検証。デビット・クレジットカード、Apple Pay、銀行送金に対応。100か国以上で利用可能。トークンは MetaMask アカウントに入金されます。"
   },
   "bytes": {
     "message": "バイト"
@@ -2063,6 +2063,9 @@
     "message": "ナンスが提案され$1よりも大きいです",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "コレクティブルIDを入力してください"
   },
@@ -2158,7 +2161,7 @@
     "message": "ダークモードを有効にする"
   },
   "notifications12Description": {
-    "message": "新規ユーザーの場合、システム設定に従ってダークモードが有効になります。既存のユーザーは、設定 -> 実験的機能で、ダークモードを手動で有効にできます。"
+    "message": "拡張機能のダークモードがついに追加されました！オンにするには、設定 - 実験的機能の順に移動し、ライト、ダーク、システムの表示オプションから一つを選択してください。"
   },
   "notifications12Title": {
     "message": "いつダークモードに？今ダークモードです！🕶️🦊"
@@ -3970,7 +3973,7 @@
     "description": "$1 is the action type. e.g (Account, Transaction, Swap)"
   },
   "visitWebSite": {
-    "message": "弊社Webサイトにアクセス"
+    "message": "弊社 Web サイトにアクセス"
   },
   "walletConnectionGuide": {
     "message": "弊社のハードウェアウォレット接続ガイド"

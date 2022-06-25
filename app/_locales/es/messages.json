@@ -438,7 +438,7 @@
     "message": "Comprar $1 con Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Acceso fácil a transacciones de $ 1,000 o menos con verificación rápida y efectiva. Aceptamos tarjetas débito, crédito, Apple Pay y transferencias bancarias en más de 100 países. Tokens serán depósitados en su MetaMask."
+    "message": "Acceso fácil a compras de hasta $1,000. Verificación interactiva rápida de compra de límite alto. Acepta tarjeta de débito/crédito, Apple Pay y transferencias bancarias. Disponible para más de 100 países. Los tokens se depositarán en su cuenta MetaMask"
   },
   "bytes": {
     "message": "Bytes"
@@ -650,7 +650,7 @@
     "message": "Interacción con el contrato"
   },
   "convertTokenToNFTDescription": {
-    "message": "Hemos detectado que este activo es un NFT. MetaMask ahora tiene soporte nativo completo para NFTs. ¿Quieres eliminarlo de tu lista de tokens y añadirlo como un NFT?"
+    "message": "Hemos detectado que este activo es un NFT. MetaMask ahora tiene soporte nativo completo para NFT. ¿Quiere eliminarlo de su lista de tokens y añadirlo como un NFT?"
   },
   "convertTokenToNFTExistDescription": {
     "message": "Hemos detectado que este recurso se ha agregado como NFT. ¿Quiere eliminarlo de su lista de tokens?"
@@ -2063,6 +2063,9 @@
     "message": "El nonce es superior al nonce sugerido de $1",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "Ingresa el ID del token"
   },
@@ -2158,7 +2161,7 @@
     "message": "Habilitar modo oscuro"
   },
   "notifications12Description": {
-    "message": "¡El modo oscuro en Extension finalmente está aquí! Para encenderlo, vaya a Configuración -> Experimental y seleccione una de las opciones de visualización: Claro, Oscuro, Sistema."
+    "message": "¡El modo oscuro en Extensión finalmente está aquí! Para activarlo, vaya a Configuración -> Experimental y seleccione una de las opciones de visualización: Claro, Oscuro, Sistema."
   },
   "notifications12Title": {
     "message": "¿Cuándo estará disponible el modo oscuro? ¡Ahora! 🕶️🦊"

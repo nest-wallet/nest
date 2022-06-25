@@ -438,7 +438,7 @@
     "message": "Beli $1 dengan Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre memungkinkan Anda menggunakan kartu debit untuk menyetorkan ETH langsung di akun MetaMask Anda."
+    "message": "Orientasi mudah untuk pembelian hingga $ 1000. Verifikasi pembelian limit tinggi interaktif yang cepat. Mendukung Kartu Debit/Kredit, Apple Pay, Transfer Bank. Tersedia di 100+ negara. Token disetor ke Akun MetaMask Anda"
   },
   "bytes": {
     "message": "Byte"
@@ -650,7 +650,7 @@
     "message": "Interaksi Kontrak"
   },
   "convertTokenToNFTDescription": {
-    "message": "Kami mendeteksi bahwa aset ini merupakan NFT. Kini MetaMask memiliki dukungan asli penuh untuk NFT. Anda ingin menghapusnya dari daftar token dan menambahkannya sebagai NFT?"
+    "message": "Kami mendeteksi bahwa aset ini merupakan NFT. Kini MetaMask memiliki dukungan asli penuh untuk NFT. Ingin menghapusnya dari daftar token dan menambahkannya sebagai NFT?"
   },
   "convertTokenToNFTExistDescription": {
     "message": "Kami mendeteksi bahwa aset ini telah ditambahkan sebagai NFT. Anda ingin menghapusnya dari daftar token?"
@@ -2063,6 +2063,9 @@
     "message": "Nonce lebih tinggi dari nonce $1 yang disarankan",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "Masukkan ID koleksi"
   },
@@ -2158,7 +2161,7 @@
     "message": "Aktifkan mode gelap"
   },
   "notifications12Description": {
-    "message": "Mode Gelap akan diaktifkan untuk pengguna baru tergantung preferensi sistem mereka. Untuk pengguna lama, aktifkan Mode Gelap secara manual di bawah Pengaturan -> Eksperimental."
+    "message": "Mode gelap pada Ekstensi akhirnya hadir! Untuk menyalakannya, buka Pengaturan -> Eksperimental dan pilih salah satu opsi tampilan: Terang, Gelap, Sistem."
   },
   "notifications12Title": {
     "message": "Kapan mode gelap? Ini saatnya mode gelap! ️🕶️🦊"

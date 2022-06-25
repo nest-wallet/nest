@@ -435,10 +435,10 @@
     "description": "$1 represents the crypto symbol to be purchased"
   },
   "buyWithWyre": {
-    "message": "使用 Wyre 购买 $1"
+    "message": "使用Wyre购买$1"
   },
   "buyWithWyreDescription": {
-    "message": "您可以通过 Wyre 使用借记卡将 $1 存入您的 MetaMask 账户。"
+    "message": "购买不超过$1000可以轻松开通。快速交互式上限购买验证。支持借记卡/信用卡、Apple Pay、银行转账。适用于100多个国家。代币存入您的MetaMask账户"
   },
   "bytes": {
     "message": "字节"
@@ -2063,6 +2063,9 @@
     "message": "Nonce 高于建议的 nouce 值 $1",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "非同质化代币(NFT)"
+  },
   "nftTokenIdPlaceholder": {
     "message": "输入代币ID"
   },
@@ -2158,7 +2161,7 @@
     "message": "启用黑暗模式"
   },
   "notifications12Description": {
-    "message": "将根据新用户的系统偏好设置为其启用黑暗模式。对于现有用户，请在“设置 -> 实验项”下手动启用黑暗模式。"
+    "message": "扩展程序的深色模式终于来了！若要开启，请前往“设置 -> 实验项”，然后选择一个显示选项：浅色、深色、系统。"
   },
   "notifications12Title": {
     "message": "何时启用黑暗模式？现在启用黑暗模式！ 🕶️🦊"

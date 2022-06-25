@@ -438,7 +438,7 @@
     "message": "Wyre ile $1 satın al"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre, doğrudan MetaMask hesabınıza $1 yatırma işlemleri için banka kartı kullanmanıza izin verir."
+    "message": "1000$'a kadar satın alma işlemlerinde kolay oryantasyon. Banka Kartı/Kredi Kartı, Apple Pay, Banka Transferlerini destekler. +100 ülkede kullanılabilir. Token'lar MetaMask Hesabına yatırılır"
   },
   "bytes": {
     "message": "Bayt"
@@ -2063,6 +2063,9 @@
     "message": "Geçici anahtar, önerilen $1 geçici anahtarından daha büyük",
     "description": "The next nonce according to MetaMask's internal logic"
   },
+  "nft": {
+    "message": "NFT"
+  },
   "nftTokenIdPlaceholder": {
     "message": "Toplanabilir kimliğini girin"
   },
@@ -2158,7 +2161,7 @@
     "message": "Karanlık modu etkinleştir"
   },
   "notifications12Description": {
-    "message": "Karanlık Mod, sistem tercihlerine bağlı olarak yeni kullanıcılar için etkinleştirilecektir. Mevcut kullanıcılar için, Ayarlar -> Deneysel altında Karanlık Modu manuel olarak etkinleştir."
+    "message": "Uzantıda karanlık mod sonunda burada! Bunu açmak için Ayarlar -> Deneysel kısmına git ve ekran seçeneklerinden birini seç: Aydınlık, Karanlık, Sistem."
   },
   "notifications12Title": {
     "message": "Karanlık mod mu? Şimdi karanlık mod! 🕶️🦊"
@@ -3970,7 +3973,7 @@
     "description": "$1 is the action type. e.g (Account, Transaction, Swap)"
   },
   "visitWebSite": {
-    "message": "Web sitemizi ziyaret edin"
+    "message": "Web sitemizi ziyaret et"
   },
   "walletConnectionGuide": {
     "message": "donanım cüzdanı bağlantı kılavuzumuz"
