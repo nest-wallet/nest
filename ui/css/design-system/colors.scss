@@ -1,6 +1,6 @@
 $color-map: (
-  'background-default': --color-background-default,
-  'background-alternative': --color-background-alternative,
+  'background-default': var(--color-background-alternative),
+  'background-alternative': var(--color-background-alternative),
   'text-default': --color-text-default,
   'text-alternative': --color-text-alternative,
   'text-muted': --color-text-muted,

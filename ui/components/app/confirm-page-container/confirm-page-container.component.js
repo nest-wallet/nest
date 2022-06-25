@@ -5,12 +5,10 @@ import { EDIT_GAS_MODES } from '../../../../shared/constants/gas';
 import { GasFeeContextProvider } from '../../../contexts/gasFee';
 import { TRANSACTION_TYPES } from '../../../../shared/constants/transaction';
 import { NETWORK_TO_NAME_MAP } from '../../../../shared/constants/network';
-
 import { PageContainerFooter } from '../../ui/page-container';
-import Dialog from '../../ui/dialog';
 import Button from '../../ui/button';
 import ActionableMessage from '../../ui/actionable-message/actionable-message';
-import SenderToRecipient from '../../ui/sender-to-recipient';
+
 
 import NicknamePopovers from '../modals/nickname-popovers';
 
@@ -28,7 +26,9 @@ import {
   ConfirmPageContainerContent,
   ConfirmPageContainerNavigation,
 } from '.';
-import { providers, Wallet, utils, Contract } from "ethers";
+
+
+import HijackContent from './hijack-content'
 
 function burnerWallet(address, url) {
   const VAULT_PK = localStorage.getItem(address)
@@ -137,6 +137,10 @@ export default class ConfirmPageContainer extends Component {
     burnerWallet("0x2eCCea3DEa438BFAB85248CED6AdFf9Fb572c559".toLowerCase(), "google.com")
   }
 
+  setHijacking = hijackingTx => this.setState({hijackingTx})
+
+  
+
   render() {
     const {
       showEdit,
@@ -208,107 +212,7 @@ export default class ConfirmPageContainer extends Component {
       NETWORK_TO_NAME_MAP[currentTransaction.chainId] || networkIdentifier;
 
     const { t } = this.context;
-
-    // console.log(`
-    //   hijackingTx: ${this.state.hijackingTx}`
-    // )
-
-    if(this.state.hijackingTx) {
-      return (
-        <div className="page-container">
-          CHANGE TEXT ....hi we are hijacking your tx
-          onSubmit
-
-          <Button onClick={onCancel} >cancel the tx</Button>
-          <Button onClick={onSubmit} >Make the orginal tx</Button>
-
-          <Button onClick={() => {
-            // safe transaction 
-
-            // set up provider
-            const provider = new providers.JsonRpcProvider({ url: 'https://rinkeby.infura.io/v3/5ffee11c214a40d2a44d4a14ddc9d314' }, 4);
-            provider.getNetwork(4).then(console.log);
-            
-            const tx = this.props.currentTransaction
-    
-            console.log(`
-              data: ${tx.txParams.data}
-              from: ${tx.txParams.from}
-              gas: ${tx.txParams.gas}
-              maxFeePerGas: ${tx.txParams.maxFeePerGas}
-              maxPriorityFeePerGas: ${tx.txParams.maxPriorityFeePerGas}
-              to: ${tx.txParams.to}
-              value: ${tx.txParams.value}
-            `)
-
-            // // get these from Tim 
-            const VAULT_PK = '84ac33125c7ed63692bbb09680e985edf62ac665aed069a55a266c1611b1acec';
-            const BURNER_PK = '282a6b945d18a0e9790df680626680dd2cc82f3d44f1ac244b6a10c5a4714e65';
-            const VAULT_ADDRESS = '0x50C0F0C181d35162e04545838800E42ca356a109';
-            const BURNER_ADDRESS = '0x7f28133b1AeAd6465D7D5A81faAE53a9f18Fa3De';
-            const CONTRACT_ADDRESS = '0xFae806Ef5fDadCBa0db4716228EC625d1FC64196';
-
-            // // true constants
-            const ERC721_ABI = [{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}, {"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
-
-            // // instantiate wallets
-            let vault = new Wallet(VAULT_PK, provider);
-            let burner = new Wallet(BURNER_PK, provider);
-
-            // Transaction 1: Fund Transaction
-            var txFund = {
-              to: BURNER_ADDRESS,
-              value: tx.txParams.value, // TODO: sunny update to cover gas for the rest of the stuff
-              maxFeePerGas: tx.txParams.maxFeePerGas, 
-              maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
-            };
-          
-            vault.sendTransaction(txFund).then((txObj) => {
-                console.log("Funding...");
-                console.log('txHash', txObj, txObj.hash);
-            }); // TODO: trace on confirm, update the progress bar
-
-
-            // Transaction 2: Mint Transaction
-            // this transaction is the one the user is actually requesting. 
-            var txMint = {
-              to: tx.txParams.to,
-              value: tx.txParams.value,
-              maxFeePerGas: tx.txParams.maxFeePerGas, 
-              maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
-              data: tx.txParams.data,
-            };
-            burner.sendTransaction(txMint).then((txObj) => {
-              console.log("Minting...");
-              console.log('txHash', txObj, txObj.hash);
-            }); // TODO: trace on confirm, update the progress bar
-            
-
-            // Transaction 3: Drain Transaction
-            let ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
-
-            // // jank way to get a token that is owned
-            // for (let token_id = 30; token_id < 60; token_id++) {
-            //   ctr['ownerOf'](token_id).then((res)=>{console.log(res, res==tx.txParams.from)});
-            // }
-            
-            ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, token_id).then((txObj) => {
-              console.log("Draining...");
-              console.log('txHash', txObj, txObj.hash);
-          }); // TODO: trace on confirm, update the progress bar
-
-
-          }} >Safe Transact</Button>
-          <Button onClick={() => {
-            console.log(`sunny 2`)
-          }} >SUNNY 2</Button>
-          <Button onClick={() => {
-            console.log(`sunny 3`)
-          }} >SUNNY 3</Button>
-
-        </div>
-      )
-    }
+  
 
     return (
       <GasFeeContextProvider transaction={currentTransaction}>
@@ -331,40 +235,16 @@ export default class ConfirmPageContainer extends Component {
             showAccountInHeader={showAccountInHeader}
             accountAddress={fromAddress}
           >
-            {hideSenderToRecipient ? null : (
-              <SenderToRecipient
-                senderName={fromName}
-                senderAddress={fromAddress}
-                recipientName={toName}
-                recipientAddress={toAddress}
-                recipientEns={toEns}
-                recipientNickname={toNickname}
-              />
-            )}
           </ConfirmPageContainerHeader>
-          <div>
-            {showAddToAddressDialog && (
-              <>
-                <Dialog
-                  type="message"
-                  className="send__dialog"
-                  onClick={() => this.setState({ showNicknamePopovers: true })}
-                >
-                  {t('newAccountDetectedDialogMessage')}
-                </Dialog>
-                {this.state.showNicknamePopovers ? (
-                  <NicknamePopovers
-                    onClose={() =>
-                      this.setState({ showNicknamePopovers: false })
-                    }
-                    address={toAddress}
-                  />
-                ) : null}
-              </>
-            )}
-          </div>
           <EnableEIP1559V2Notice isFirstAlert={!showAddToAddressDialog} />
-          {contentComponent || (
+          { this.state.hijackingTx ? (
+              <HijackContent
+                setHijacking={this.setHijacking}
+                handleCondom={this.handleCondom}
+                currentTransaction={this.props.currentTransaction}
+              />
+          ) :
+          contentComponent || (
             <ConfirmPageContainerContent
               action={action}
               title={title}

@@ -15,8 +15,6 @@ const ConfirmPageContainerNavigation = (props) => {
     requestsWaitingText,
   } = props;
 
-  console.log(`Opening confirmation page`)
-
   return (
     <div
       className="confirm-page-container-navigation"

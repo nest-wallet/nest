@@ -32,6 +32,7 @@ import AppHeader from '../../components/app/app-header';
 import UnlockPage from '../unlock-page';
 import Alerts from '../../components/app/alerts';
 import Asset from '../asset';
+import Dapp from '../dapp'
 import OnboardingAppHeader from '../onboarding-flow/onboarding-app-header/onboarding-app-header';
 import TokenDetailsPage from '../token-details';
 ///: BEGIN:ONLY_INCLUDE_IN(flask)
@@ -40,6 +41,7 @@ import Notifications from '../notifications';
 
 import {
   IMPORT_TOKEN_ROUTE,
+  DAPP_ROUTE,
   ASSET_ROUTE,
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
   CONFIRM_TRANSACTION_ROUTE,
@@ -234,6 +236,7 @@ export default class Routes extends Component {
         />
         <Authenticated path={`${ASSET_ROUTE}/:asset/:id`} component={Asset} />
         <Authenticated path={`${ASSET_ROUTE}/:asset/`} component={Asset} />
+        <Authenticated path={`${DAPP_ROUTE}/:id`} component={Dapp} />
         <Authenticated path={DEFAULT_ROUTE} component={Home} />
       </Switch>
     );

@@ -13,6 +13,7 @@ body {
   padding: 0;
   font-size: 16px;
   overflow: auto;
+  background-color: var(--color-background-alternative);
 }
 
 html {
@@ -52,7 +53,7 @@ html {
   background: var(--color-background-alternative);
 
   @media screen and (max-width: $break-small) {
-    background-color: var(--color-background-default);
+    background-color: var(--color-background-alternative);
   }
 }
 /* stylelint-enable */

@@ -21,7 +21,7 @@
                         <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
                         <use fill="#FCFCFC" fill-rule="evenodd" xlink:href="#path-1"></use>
                     </g>
-                    <polygon id="Rectangle-Copy-4" fill-opacity="0.0299999993" fill="#000000" transform="translate(53.248033, 52.264246) rotate(-315.000000) translate(-53.248033, -52.264246) " points="16.3049794 15.3097285 90.1910867 15.3097285 90.1910867 89.2187628"></polygon>
+                    <polygon id="Rectangle-Copy-4" fill-opacity="0.0299999993" fill="var(--color-background-default)" transform="translate(53.248033, 52.264246) rotate(-315.000000) translate(-53.248033, -52.264246) " points="16.3049794 15.3097285 90.1910867 15.3097285 90.1910867 89.2187628"></polygon>
                 </g>
             </g>
         </g>

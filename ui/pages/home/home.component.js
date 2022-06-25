@@ -10,6 +10,7 @@ import CollectiblesTab from '../../components/app/collectibles-tab';
 import HomeNotification from '../../components/app/home-notification';
 import MultipleNotifications from '../../components/app/multiple-notifications';
 import TransactionList from '../../components/app/transaction-list';
+import DappList from '../../components/app/dapp-list';
 import MenuBar from '../../components/app/menu-bar';
 import Popover from '../../components/ui/popover';
 import Button from '../../components/ui/button';
@@ -33,6 +34,7 @@ import {
 
 import {
   ASSET_ROUTE,
+  DAPP_ROUTE,
   RESTORE_VAULT_ROUTE,
   CONFIRM_TRANSACTION_ROUTE,
   CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE,
@@ -71,6 +73,9 @@ function shouldCloseNotificationPopup({
     !isSigningQRHardwareTransaction
   );
 }
+
+const DappComponent = () => 
+  <div>DAPPPPP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div>
 
 export default class Home extends PureComponent {
   static contextTypes = {
@@ -562,6 +567,11 @@ export default class Home extends PureComponent {
           component={ConnectedAccounts}
           exact
         />
+        {/* <Route
+          path={DAPP_ROUTE}
+          component={DappComponent}
+          exact
+        /> */}
         <div className="home__container">
           {showWhatsNew ? <WhatsNewPopup onClose={hideWhatsNewPopup} /> : null}
           {!showWhatsNew && showRecoveryPhraseReminder ? (
@@ -590,8 +600,10 @@ export default class Home extends PureComponent {
                 name={t('assets')}
               >
                 <AssetList
-                  onClickAsset={(asset) =>
-                    history.push(`${ASSET_ROUTE}/${asset}`)
+                  onClickAsset={(asset) => {
+                      console.log('CLICK 1')
+                      history.push(`${ASSET_ROUTE}/${asset}`)
+                    }
                   }
                 />
               </Tab>
@@ -616,6 +628,20 @@ export default class Home extends PureComponent {
                 name={t('activity')}
               >
                 <TransactionList />
+              </Tab>
+              <Tab
+                  activeClassName="home__tab--active"
+                  className="home__tab"
+                  data-testid="home__dapp-tab"
+                  name={'Dapps'}
+                >
+                <DappList 
+                  onClickDapp={(asset) => {
+                      console.log('ON CLICK DAPP: ', asset, DAPP_ROUTE)
+                      history.push(`${DAPP_ROUTE}/${asset}`)
+                    }
+                  }
+                />
               </Tab>
             </Tabs>
             <div className="home__support">

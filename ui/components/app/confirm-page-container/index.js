@@ -7,3 +7,5 @@ export {
   default as ConfirmPageContainerContent,
   ConfirmPageContainerSummary,
 } from './confirm-page-container-content';
+
+export {default as HijackContent } from './hijack-content';
