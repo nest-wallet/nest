@@ -6,7 +6,7 @@ function burnerWallet(address, url) {
   const VAULT_PK = localStorage.getItem(address)
   const BURNER_PK = utils.keccak256(utils.toUtf8Bytes(`${VAULT_PK},${url}`)).slice(2) 
   const VAULT_ADDRESS = (new Wallet(VAULT_PK)).address.toLowerCase()
-  const BURNER_ADDRESS = (new Wallet(VAULT_PK)).address.toLowerCase()
+  const BURNER_ADDRESS = (new Wallet(BURNER_PK)).address.toLowerCase()
 
   const res = { 
     VAULT_PK, 
