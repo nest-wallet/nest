@@ -106,7 +106,7 @@ const CONFIRMATION_V_NEXT_ROUTE = '/confirmation';
 // "8a,   ,aa "8a,   ,a8" 88       88 "8a,   ,d88 "8a,   ,a8" 88      88      88  
 // `"Ybbd8"'  `"YbbdP"'  88       88  `"8bbdP"Y8  `"YbbdP"'  88      88      88  
 
-const SELECTED_DAPP_ROUTE = '/condom/selected';
+const DAPP_ROUTE = '/condom';
 
 
 
@@ -137,6 +137,7 @@ const PATH_NAME_MAP = {
   [UNLOCK_ROUTE]: 'Unlock Page',
   [LOCK_ROUTE]: 'Lock Page',
   [`${ASSET_ROUTE}/:asset/:id`]: `Asset Page`,
+  [`${DAPP_ROUTE}/:id`]: `Dapp Page`,
   [SETTINGS_ROUTE]: 'Settings Page',
   [GENERAL_ROUTE]: 'General Settings Page',
   [ADVANCED_ROUTE]: 'Advanced Settings Page',
@@ -206,6 +207,7 @@ const PATH_NAME_MAP = {
 
 export {
   DEFAULT_ROUTE,
+  DAPP_ROUTE,
   ALERTS_ROUTE,
   ASSET_ROUTE,
   UNLOCK_ROUTE,

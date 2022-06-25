@@ -18,9 +18,10 @@ import { isEqualCaseInsensitive } from '../../../../shared/modules/string-utils'
 
 const PAGE_INCREMENT = 10;
 
-const DAPPS = ['https://doodles.app/', 'https://goblintown.wtf/', 'https://www.moonbirds.xyz/']
+const DAPPS = [{name: 'https://doodles.app/', id: 1}, {name: 'https://goblintown.wtf/', id: 2}, {name: 'https://www.moonbirds.xyz/', id: 3}]
 // TODO (TRACE): do we want (current, completed) similar to transaction-list? 
 
+// history.push(`${ASSET_ROUTE}/${asset}`)
 const DappListItem = ({
   name,
   className,
@@ -32,7 +33,7 @@ const DappListItem = ({
   return (
     <div
       className={`account-list-item ${className}`}
-      onClick={() => handleClick({name})}
+      onClick={handleClick}
     >
       <div className="account-list-item__top-row">
         <Identicon
@@ -48,12 +49,14 @@ const DappListItem = ({
 }
 
 export default function DappList({
+  onClickDapp
 }) {
   // active dapps 
   // old apps
 
-  const handleDappClick = data => {
-    console.log('data!!!!!!!!!!!!!!!!!')
+  const handleDappClick = ({name, id}) => {
+    console.log('data!!!!!!!!!!!!!!!!!: ', name, id)
+    onClickDapp(id)
   }
 
   return (
@@ -64,10 +67,10 @@ export default function DappList({
             <div className="transaction-list__header">
               {`DAPPS (${DAPPS.length})`}
             </div>
-            {DAPPS.map(name =>
+            {DAPPS.map(dapp =>
              <DappListItem
-              name={name}
-              handleClick={handleDappClick}
+              name={dapp.name}
+              handleClick={() => handleDappClick(dapp)}
               />
             )}
           </div>
