@@ -4,9 +4,13 @@ import { providers, Wallet, utils, Contract } from "ethers";
 
 
 export default function HijackContent({setHijacking, currentTransaction}) {
+  const [txHash, setTxHash] = useState(false)
   const [funding, setFunding] = useState(true)
   const [using, setUsing] = useState(false)
-  const [removing, setRemoving] = useState (false)
+  const [removing, setRemoving] = useState(false)
+
+  const [error, setError] = useState(null)
+
   let step = 'Funding'
 
   if (using) {
@@ -59,11 +63,12 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       maxFeePerGas: tx.txParams.maxFeePerGas, 
       maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
     };
-    console.log('here!!!')
-    const vaulTx = await vault.sendTransaction(txFund)
-
-    console.log('Funding 💸: ', vaulTx)
-
+    const fundingTx = await vault.sendTransaction(txFund)
+    console.log('Funding 💸: ', fundingTx)
+    setTxHash(fundingTx.hash)
+    await fundingTx.wait()
+    console.log('Funded 💸💸💸💸💸💸💸💸💸💸💸')
+    setFunding(false)
     // Transaction 2: Mint Transaction
     // this transaction is the one the user is actually requesting. 
     const txMint = {
@@ -74,13 +79,23 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       data: tx.txParams.data,
     };
 
-    const burnerTx = await burner.sendTransaction(txMint)
-    console.log('Minting 🚀: ', burnerTx)
+
+    setUsing(true)
+    const usingTx = await burner.sendTransaction(txMint)
+    console.log('Minting 🚀: ', usingTx)
+    setTxHash(usingTx.hash)
+    await usingTx.wait()
+    console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
+    setUsing(false)
+    setRemoving(true)
 
     // Transaction 3: Drain Transaction
     const ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
     const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, token_id)
+    setTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
+    await drainTx.wait()
+    console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
   }
 
   return (
@@ -88,6 +103,9 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       <div className="content">
         <h1>{step} Condom</h1>
         <h1>..............</h1>
+        { txHash ? 
+          <a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target="_blank">View {step} transaction</a> : null
+        }
       </div>
       {/* <Button type="default" onClick={() => setHijacking(false)}>
         Make the orginal tx
