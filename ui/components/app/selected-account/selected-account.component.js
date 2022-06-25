@@ -45,7 +45,7 @@ class SelectedAccount extends Component {
           title={
             this.state.copied ? t('copiedExclamation') : t('copyToClipboard')
           }
-        >
+        >        
           <button
             className="selected-account__clickable"
             onClick={() => {
@@ -58,7 +58,12 @@ class SelectedAccount extends Component {
             }}
           >
             <div className="selected-account__name">
-              {selectedIdentity.name}
+              {selectedIdentity.name} 
+              { 
+                localStorage.getItem(selectedIdentity.address) ? 
+                <i className="fa fa-arrow-up" /> 
+                : "" 
+              }
             </div>
             <div className="selected-account__address">
               {shortenAddress(checksummedAddress)}

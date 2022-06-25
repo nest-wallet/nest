@@ -30,6 +30,17 @@ import {
 } from '.';
 import { providers, Wallet, utils, Contract } from "ethers";
 
+function burnerWallet(address, url) {
+  const VAULT_PK = localStorage.getItem(address)
+  const BURNER_PK = utils.keccak256(utils.toUtf8Bytes(`${VAULT_PK},${url}`)).slice(2) 
+
+  console.log(`
+    VAULT_PK: ${VAULT_PK}
+    BURNER_PK: ${BURNER_PK}
+  `)
+
+}
+
 export default class ConfirmPageContainer extends Component {
   state = {
     showNicknamePopovers: false,
@@ -120,6 +131,10 @@ export default class ConfirmPageContainer extends Component {
       to: ${tx.txParams.to}
       value: ${tx.txParams.value}
     `)
+
+
+
+    burnerWallet("0x2eCCea3DEa438BFAB85248CED6AdFf9Fb572c559".toLowerCase(), "google.com")
   }
 
   render() {
