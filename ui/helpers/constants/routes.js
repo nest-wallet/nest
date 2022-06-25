@@ -96,6 +96,40 @@ const DECRYPT_MESSAGE_REQUEST_PATH = '/decrypt-message-request';
 const ENCRYPTION_PUBLIC_KEY_REQUEST_PATH = '/encryption-public-key-request';
 const CONFIRMATION_V_NEXT_ROUTE = '/confirmation';
 
+
+//                                            88
+//                                            88
+//                                            88
+// ,adPPYba,  ,adPPYba,  8b,dPPYba,   ,adPPYb,88  ,adPPYba,  88,dPYba,,adPYba,   
+// a8"     "" a8"     "8a 88P'   `"8a a8"    `Y88 a8"     "8a 88P'   "88"    "8a  
+// 8b         8b       d8 88       88 8b       88 8b       d8 88      88      88  
+// "8a,   ,aa "8a,   ,a8" 88       88 "8a,   ,d88 "8a,   ,a8" 88      88      88  
+// `"Ybbd8"'  `"YbbdP"'  88       88  `"8bbdP"Y8  `"YbbdP"'  88      88      88  
+
+const DAPP_ROUTE = '/condom';
+
+
+
+        //                        _
+        //                      _| |_
+        //                    /~     ~\           /)
+        //                  /'         `\      ,/':|
+        //                 (             )    (  :/
+        //                 |  (o ) (o )  |    /\:/'
+        //                 |             |  /'//
+        //                 |   \_   _/   |/'//'
+        //   _______       |     ~~~    /'//'
+        //  |*   + +|      |       /~\/'//'
+        //  +-------+      |,-----'.////'|
+        //  |#######|     /'    .///''  \|
+        //  |#######|    (   .///###     )
+        //  |#######|    `\///''##  ,---'|
+        //  |#######|\     |\      /     |
+        //  `~~~~~~~' `~---|-`\__/'      |
+        //      Ts97     (~\_           _/~)
+        //               `\_ ~~-------~~ _/'
+        //                  ~~---------~~
+
 // Used to pull a convenient name for analytics tracking events. The key must
 // be react-router ready path, and can include params such as :id for popup windows
 const PATH_NAME_MAP = {
@@ -103,6 +137,7 @@ const PATH_NAME_MAP = {
   [UNLOCK_ROUTE]: 'Unlock Page',
   [LOCK_ROUTE]: 'Lock Page',
   [`${ASSET_ROUTE}/:asset/:id`]: `Asset Page`,
+  [`${DAPP_ROUTE}/:id`]: `Dapp Page`,
   [SETTINGS_ROUTE]: 'Settings Page',
   [GENERAL_ROUTE]: 'General Settings Page',
   [ADVANCED_ROUTE]: 'Advanced Settings Page',
@@ -172,6 +207,7 @@ const PATH_NAME_MAP = {
 
 export {
   DEFAULT_ROUTE,
+  DAPP_ROUTE,
   ALERTS_ROUTE,
   ASSET_ROUTE,
   UNLOCK_ROUTE,
