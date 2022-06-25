@@ -204,7 +204,7 @@ export default class ConfirmPageContainer extends Component {
           onSubmit
 
           <Button onClick={onCancel} >cancel the tx</Button>
-          <Button onClick={() => this.setState({ hijackingTx: false })} >Make the orginal tx</Button>
+          <Button onClick={onSubmit} >Make the orginal tx</Button>
 
           <Button onClick={() => {
             console.log(`sunny 1`)
