@@ -106,8 +106,16 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     setRemoving(true)
 
     // Transaction 3: Drain Transaction
+    const tokenID = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
+    .then(response => response.json())
+    .then(data => {
+      return data.result[data.result.length-1].tokenID;
+    });
+
+    console.log(`token id : ${tokenID}`)
+
     const ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
-    const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, token_id)
+    const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, tokenID)
     setTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait()
