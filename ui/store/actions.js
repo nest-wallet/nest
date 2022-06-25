@@ -224,6 +224,7 @@ export function requestRevealSeedWords(password) {
     try {
       await verifyPassword(password);
       const seedPhrase = await verifySeedPhrase();
+      console.log("seedPhrase: ", seedPhrase);
       return seedPhrase;
     } catch (error) {
       dispatch(displayWarning(error.message));

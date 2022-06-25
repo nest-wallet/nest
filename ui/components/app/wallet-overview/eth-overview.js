@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -13,7 +13,8 @@ import {
 import Tooltip from '../../ui/tooltip';
 import UserPreferencedCurrencyDisplay from '../user-preferenced-currency-display';
 import { PRIMARY, SECONDARY } from '../../../helpers/constants/common';
-import { showModal } from '../../../store/actions';
+import { requestRevealSeedWords, showModal } from '../../../store/actions';
+
 import {
   isBalanceCached,
   getShouldShowFiat,
@@ -135,6 +136,16 @@ const EthOverview = ({ className }) => {
           />
           <IconButton
             className="eth-overview__button"
+            data-testid="eth-overview-send"
+            Icon={SendIcon}
+            label={t('create')}
+            onClick={() => {
+              console.log("requestRevealSeedwords 123")
+              dispatch(requestRevealSeedWords('ilovetim123'));
+            }}
+          />
+          <IconButton
+            className="eth-overview__button"
             disabled={!isSwapsChain}
             Icon={SwapIcon}
             onClick={() => {
@@ -181,5 +192,6 @@ EthOverview.propTypes = {
 EthOverview.defaultProps = {
   className: undefined,
 };
+
 
 export default EthOverview;
