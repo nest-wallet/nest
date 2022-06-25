@@ -29,6 +29,8 @@ import {
   ConfirmPageContainerNavigation,
 } from '.';
 
+import HijackContent from './hijack-content'
+
 export default class ConfirmPageContainer extends Component {
   state = {
     showNicknamePopovers: false,
@@ -121,6 +123,8 @@ export default class ConfirmPageContainer extends Component {
     `)
   }
 
+  setHijacking = hijackingTx => this.setState({hijackingTx})
+
   render() {
     const {
       showEdit,
@@ -192,35 +196,10 @@ export default class ConfirmPageContainer extends Component {
       NETWORK_TO_NAME_MAP[currentTransaction.chainId] || networkIdentifier;
 
     const { t } = this.context;
-
     console.log(`
       hijackingTx: ${this.state.hijackingTx}`
     )
-
-    if(this.state.hijackingTx) {
-      return (
-        <div className="page-container">
-          CHANGE TEXT ....hi we are hijacking your tx
-          onSubmit
-
-          <Button onClick={onCancel} >cancel the tx</Button>
-          <Button onClick={() => this.setState({ hijackingTx: false })} >Make the orginal tx</Button>
-
-          <Button onClick={() => {
-            console.log(`sunny 1`)
-          }} >SUNNY 1</Button>
-          <Button onClick={() => {
-            console.log(`sunny 2`)
-          }} >SUNNY 2</Button>
-          <Button onClick={() => {
-            console.log(`sunny 3`)
-          }} >SUNNY 3</Button>
-
-
-          
-        </div>
-      )
-    }
+    console.log('content component: ', contentComponent)
 
     return (
       <GasFeeContextProvider transaction={currentTransaction}>
@@ -243,40 +222,14 @@ export default class ConfirmPageContainer extends Component {
             showAccountInHeader={showAccountInHeader}
             accountAddress={fromAddress}
           >
-            {hideSenderToRecipient ? null : (
-              <SenderToRecipient
-                senderName={fromName}
-                senderAddress={fromAddress}
-                recipientName={toName}
-                recipientAddress={toAddress}
-                recipientEns={toEns}
-                recipientNickname={toNickname}
-              />
-            )}
           </ConfirmPageContainerHeader>
-          <div>
-            {showAddToAddressDialog && (
-              <>
-                <Dialog
-                  type="message"
-                  className="send__dialog"
-                  onClick={() => this.setState({ showNicknamePopovers: true })}
-                >
-                  {t('newAccountDetectedDialogMessage')}
-                </Dialog>
-                {this.state.showNicknamePopovers ? (
-                  <NicknamePopovers
-                    onClose={() =>
-                      this.setState({ showNicknamePopovers: false })
-                    }
-                    address={toAddress}
-                  />
-                ) : null}
-              </>
-            )}
-          </div>
           <EnableEIP1559V2Notice isFirstAlert={!showAddToAddressDialog} />
-          {contentComponent || (
+          { this.state.hijackingTx ? (
+              <HijackContent
+                setHijacking={this.setHijacking}
+              />
+          ) :
+          contentComponent || (
             <ConfirmPageContainerContent
               action={action}
               title={title}
