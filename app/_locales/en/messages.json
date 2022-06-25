@@ -245,19 +245,19 @@
     "message": "Amount"
   },
   "appDescription": {
-    "message": "An Ethereum Wallet in your Browser",
+    "message": "A burner wallet management platform",
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "Nest",
     "description": "The name of the application"
   },
   "appNameBeta": {
-    "message": "MetaMask Beta",
+    "message": "Nest Beta",
     "description": "The name of the application (Beta)"
   },
   "appNameFlask": {
-    "message": "MetaMask Flask",
+    "message": "Nest Flask",
     "description": "The name of the application (Flask)"
   },
   "approve": {
