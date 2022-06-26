@@ -776,7 +776,7 @@ export default class ConfirmTransactionBase extends Component {
     });
   }
 
-  handleCancel(close=true) {
+  handleCancel() {
     const {
       txData,
       cancelTransaction,
@@ -790,9 +790,7 @@ export default class ConfirmTransactionBase extends Component {
     updateCustomNonce('');
     cancelTransaction(txData).then(() => {
       clearConfirmTransaction();
-      if(close) {
-        history.push(mostRecentOverviewPage);
-      }
+      history.push(mostRecentOverviewPage);
     });
   }
 
@@ -1104,7 +1102,7 @@ export default class ConfirmTransactionBase extends Component {
           }
           onEdit={() => this.handleEdit()}
           onCancelAll={() => this.handleCancelAll()}
-          onCancel={(close=true) => this.handleCancel(close)}
+          onCancel={() => this.handleCancel()}
           onSubmit={() => this.handleSubmit()}
           hideSenderToRecipient={hideSenderToRecipient}
           origin={txData.origin}

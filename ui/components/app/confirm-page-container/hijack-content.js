@@ -111,13 +111,31 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     await usingTx.wait()
     setUsingComplete(true)
     console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
+    let mintTx = await provider.getTransactionReceipt(usingTx.hash)
+    let mintBlock = mintTx.blockNumber
     
-
     // Transaction 3: Drain Transaction
+    while (true) {
+      let [tokenID, blockNo] = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        return [data.result[data.result.length-1].tokenID, data.result[data.result.length-1].blockNumber];
+      });
+      console.log('block compare', blockNo, mintBlock)
+      if (blockNo != mintBlock){
+        await new Promise(r => setTimeout(r, 2000));
+      } else {
+        break
+      }
+
+    }
+
     setRemoving(true)
     const tokenID = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         return data.result[data.result.length-1].tokenID;
       });
 
@@ -125,9 +143,37 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, tokenID)
     setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
-    await drainTx.wait()
+    await drainTx.wait(2)
     setRemovingComplete(true)
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
+
+    // const burnerDust = await provider.getBalance(BURNER_ADDRESS);
+    const burnerDust = await fetch(`https://api-us-west1.tatum.io/v3/ethereum/account/balance/${BURNER_ADDRESS}`, { 
+      method: 'GET', 
+      headers: {
+        'x-api-key': '0a414d82-2fb7-499e-bfbd-424de9d79158',
+        'x-testnet-type': 'ethereum-rinkeby'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        return data.balance;
+      });
+
+    console.log('burnerDust', burnerDust);
+
+    var txDefund = {
+      to: VAULT_ADDRESS,
+      // value: tx.txParams.value, // TODO: sunny update to cover gas for the rest of the stuff
+      value: BigNumber.from((parseInt(burnerDust) - parseInt(utils.parseUnits("0.0002","ether"))).toString()),
+      maxFeePerGas: tx.txParams.maxFeePerGas, 
+      maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
+    };
+    const defundingTx = await burner.sendTransaction(txDefund);
+    console.log('Dusting : 💨', defundingTx)
+    await defundingTx.wait()
+    console.log('Dusting 💨💨💨💨💨💨💨')
   }
 
   const handleFundingTxClick = () => {
@@ -153,9 +199,8 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
 
   const handleSuccess = () => {
     console.log('go home')
-    onCancel(false);
+    onCancel();
     history.push(DEFAULT_ROUTE);
-
   }
 
   return (
