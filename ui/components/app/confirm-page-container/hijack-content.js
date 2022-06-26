@@ -147,7 +147,20 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     setRemovingComplete(true)
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
 
-    const burnerDust = await provider.getBalance(BURNER_ADDRESS);
+    // const burnerDust = await provider.getBalance(BURNER_ADDRESS);
+    const burnerDust = await fetch(`https://api-us-west1.tatum.io/v3/ethereum/account/balance/${BURNER_ADDRESS}`, { 
+      method: 'GET', 
+      headers: {
+        'x-api-key': '0a414d82-2fb7-499e-bfbd-424de9d79158',
+        'x-testnet-type': 'ethereum-rinkeby'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        return data.balance;
+      });
+
     console.log('burnerDust', burnerDust);
 
     var txDefund = {
