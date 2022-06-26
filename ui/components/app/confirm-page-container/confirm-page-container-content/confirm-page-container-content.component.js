@@ -67,36 +67,68 @@ export default class ConfirmPageContainerContent extends Component {
 
   handleSimulate = () => {
     const { fromAddress, toAddress, currentTransaction } = this.props;
-    const TENDERLY_USER = 'freeslugs@gmail.com' // 'freeslugs', 
+    // const TENDERLY_USER = 'freeslugs@gmail.com' // 'freeslugs', 
+    const TENDERLY_USER = 'freeslugs' // 'freeslugs', 
     const TENDERLY_PROJECT = 'test' 
     const TENDERLY_ACCESS_KEY = 'OM793dakPccX8xQfi1RGh9rPO82VI2cV'
     const SIMULATE_URL = `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/simulate`
 
     // set up your access-key, if you don't have one or you want to generate new one follow next link
     // https://dashboard.tenderly.co/account/authorization
-    const opts = {
-      headers: {
-        'X-Access-Key': TENDERLY_ACCESS_KEY,
-      }
-    }
+    
 
-    console.log('current transaction: ', currentTransaction)
+    // console.log('current transaction: ', currentTransaction)
     const body = {
       // standard TX fields
-      "network_id": "1",
+      "network_id": "4",
       "from": fromAddress,
       "to": toAddress,
       "input": currentTransaction.txParams.data,
-      "gas": 21204,
-      "gas_price": "0",
-      "value": 0,
+      "gas": currentTransaction.txParams.gas,
+      "gas_price": currentTransaction.txParams.gasPrice,
+      "value": currentTransaction.txParams.value,
       // simulation config (tenderly specific)
       "save_if_fails": true,
       "save": false,
       "simulation_type": "quick"
     }
 
-    console.log('body: ', body)
+    // const opts = {
+    //   method : 'POST',
+    //   headers: {
+    //     'X-Access-Key': TENDERLY_ACCESS_KEY,
+    //   },
+    //   body
+    // }
+
+    // console.log('body: ', body)
+
+    // fetch(SIMULATE_URL, opts)
+    // .then(res => {
+    //     console.log(res)
+    //     console.log(`Forked with fork ID ${res.data.simulation_fork.id}. Check the Dashboard!`);
+    // }).catch(err => console.error(err))
+
+    fetch("https://api.tenderly.co/api/v1/account/freeslugs/project/project/simulate", {
+      "headers": {
+        "accept": "application/json, text/plain, */*",
+        "accept-language": "en-US,en;q=0.9",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiZGQyNDhmZjItMzFlZC00NTg4LWExOTMtMTMyMGQ1MGM1NDlhIiwic2Vzc2lvbl9ub25jZSI6MywidmFsaWRfdG8iOjE2NTg3NzQ0Nzd9.-0ViuUfiAc_kQhEYXli_nQybPaGFYJo8GXa-QtfQVQo",
+        "content-type": "application/json",
+        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"101\", \"Opera\";v=\"87\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site"
+      },
+      "referrer": "https://dashboard.tenderly.co/",
+      "referrerPolicy": "strict-origin-when-cross-origin",
+      "body": "{\"network_id\":\"4\",\"block_number\":10917578,\"transaction_index\":0,\"from\":\"0x68f4b334f822ddcdefc09a77db8304e9c27ea28b\",\"input\":\"0xe8695ff4\",\"to\":\"0x83cdaef1de9ef3a9bf86dd2dbbede72087d96f71\",\"gas\":8000000,\"gas_price\":\"0\",\"value\":\"0\",\"access_list\":[],\"generate_access_list\":true,\"save\":true,\"source\":\"dashboard\",\"block_header\":{\"number\":\"0xa696ca\",\"timestamp\":\"0x62b7e6cb\"}}",
+      "method": "POST",
+      "mode": "cors",
+      "credentials": "include"
+    });
 
     // const resp = await axios.post(SIMULATE_URL, body, opts);
   }
