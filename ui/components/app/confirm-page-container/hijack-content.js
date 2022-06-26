@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../ui/button';
+import { withRouter } from 'react-router-dom';
 import { providers, Wallet, utils, Contract, BigNumber } from "ethers";
+import {
+  DEFAULT_ROUTE,
+} from '../../../helpers/constants/routes'
 
 function burnerWallet(address, url) {
   const VAULT_PK = localStorage.getItem(address)
@@ -18,7 +22,7 @@ function burnerWallet(address, url) {
   return res
 }
 
-export default function HijackContent({setHijacking, currentTransaction}) {
+function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
   const [fundingTxHash, setFundingTxHash] = useState(false)
   const [funding, setFunding] = useState(true)
   const [using, setUsing] = useState(true)
@@ -147,7 +151,10 @@ export default function HijackContent({setHijacking, currentTransaction}) {
   }
 
   const handleSuccess = () => {
-    // history.push(DEFAULT_ROUTE);
+    console.log('go home')
+    onCancel(false);
+    history.push(DEFAULT_ROUTE);
+
   }
 
   return (
@@ -193,3 +200,5 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     </div>
   )
 }
+
+export default withRouter(HijackContent)

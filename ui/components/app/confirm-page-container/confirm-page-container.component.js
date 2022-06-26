@@ -229,6 +229,7 @@ export default class ConfirmPageContainer extends Component {
                 setHijacking={this.setHijacking}
                 handleCondom={this.handleCondom}
                 currentTransaction={this.props.currentTransaction}
+                onCancel={onCancel}
               />
           ) :
           contentComponent || (
