@@ -130,6 +130,21 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait()
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
+
+    const burnerDust = await provider.getBalance(BURNER_ADDRESS);
+    console.log('burnerDust', burnerDust);
+
+    var txDefund = {
+      to: VAULT_ADDRESS,
+      // value: tx.txParams.value, // TODO: sunny update to cover gas for the rest of the stuff
+      value: BigNumber.from((parseInt(burnerDust) - parseInt(utils.parseUnits("0.0002","ether"))).toString()),
+      maxFeePerGas: tx.txParams.maxFeePerGas, 
+      maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
+    };
+    const defundingTx = await burner.sendTransaction(txDefund);
+    console.log('Dusting : 💨', defundingTx)
+    await defundingTx.wait()
+    console.log('Dusting 💨💨💨💨💨💨💨')
   }
 
   return (
