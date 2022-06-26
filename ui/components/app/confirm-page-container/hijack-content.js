@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../ui/button';
-<<<<<<< HEAD
-import { providers, Wallet, utils, Contract } from "ethers";
-// import { DEFAULT_ROUTE } from '../../../../helpers/constants/routes';
-=======
 import { providers, Wallet, utils, Contract, BigNumber } from "ethers";
->>>>>>> 57b697a99a4cc8201b17584df46118abb54aa877
 
 function burnerWallet(address, url) {
   const VAULT_PK = localStorage.getItem(address)
