@@ -10,7 +10,7 @@ const IconCaretDown = ({
   <svg
     width={size}
     height={size}
-    fill={color}
+    fill={'white'}
     className={className}
     aria-label={ariaLabel}
     xmlns="http://www.w3.org/2000/svg"

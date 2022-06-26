@@ -1,5 +1,6 @@
 .transaction-detail {
   position: relative;
+  font-family: Helvetica !important;
 
   .transaction-detail-edit {
     text-align: end;
@@ -7,8 +8,8 @@
 
     button {
       @include H7;
-
-      color: var(--color-primary-default);
+      font-family: Helvetica !important;
+      color: #E561A7;
       background: transparent;
       border: 0;
       padding-inline-end: 0;

@@ -23,7 +23,7 @@ export default function SiteOrigin({
           }
         />
       ) : (
-        <span>{siteOrigin}</span>
+        <span style={{color: '#E561A7'}}>{siteOrigin}</span>
       )}
     </div>
   );

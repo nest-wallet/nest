@@ -43,15 +43,11 @@ export default function Chip({
     >
       {leftIcon ? <div className="chip__left-icon">{leftIcon}</div> : null}
       {children ?? (
-        <Typography
-          className="chip__label"
-          variant={TYPOGRAPHY.H6}
-          tag="span"
-          color={COLORS.TEXT_ALTERNATIVE}
-          {...labelProps}
+        <p
+          style={{'fontSize': '12px', color: 'white', 'marginLeft': '5px'}}
         >
           {label}
-        </Typography>
+        </p>
       )}
       {rightIcon ? <div className="chip__right-icon">{rightIcon}</div> : null}
     </div>
