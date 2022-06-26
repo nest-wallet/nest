@@ -111,13 +111,31 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     await usingTx.wait()
     setUsingComplete(true)
     console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
+    let mintTx = await provider.getTransactionReceipt(usingTx.hash)
+    let mintBlock = mintTx.blockNumber
     
-
     // Transaction 3: Drain Transaction
+    while (true) {
+      let [tokenID, blockNo] = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        return [data.result[data.result.length-1].tokenID, data.result[data.result.length-1].blockNumber];
+      });
+      console.log('block compare', blockNo, mintBlock)
+      if (blockNo != mintBlock){
+        await new Promise(r => setTimeout(r, 2000));
+      } else {
+        break
+      }
+
+    }
+
     setRemoving(true)
     const tokenID = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         return data.result[data.result.length-1].tokenID;
       });
 
@@ -125,7 +143,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, tokenID)
     setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
-    await drainTx.wait()
+    await drainTx.wait(2)
     setRemovingComplete(true)
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
 
