@@ -153,9 +153,8 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
 
   const handleSuccess = () => {
     console.log('go home')
-    onCancel(false);
+    onCancel();
     history.push(DEFAULT_ROUTE);
-
   }
 
   return (
