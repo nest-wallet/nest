@@ -44,8 +44,8 @@ const DappListItem = ({
           address={name}
           className="account-list-item__identicon"
           diameter={18}
-        />
-        <div className="account-list-item__account-name">{ name }</div>
+        /> 
+        <div className="dapp-list-item__account-name" style={{'fontSize': '12px', 'marginLeft': '5px', 'paddingTop': '1px'}}>{ name }</div>
         {icon ? <div className="account-list-item__icon">{icon}</div> : null}
         <Button 
           large={false} 
@@ -55,7 +55,8 @@ const DappListItem = ({
             width: 100,
             marginLeft: 'auto',
             padding: "0.2rem 0",
-            marginRight: 5
+            marginRight: 5,
+            border: '1px solid #E561A7'
           }}
           onClick={() => {
             console.log(`report ${name} as a rug `)
