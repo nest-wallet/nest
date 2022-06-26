@@ -32,6 +32,7 @@ export default function ImportTokenLink() {
             className="import-token-link__link"
             type="link"
             onClick={() => detectNewTokens()}
+            style={{color: ''}}
           >
             {t('refreshList')}
           </Button>
@@ -52,6 +53,7 @@ export default function ImportTokenLink() {
             },
           });
         }}
+        style={{color: '#E561A7'}}
       >
         {isTokenDetectionsupported
           ? t('importTokens')

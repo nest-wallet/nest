@@ -1,6 +1,6 @@
 .app-header {
   align-items: center;
-  background: var(--color-background-alternative);
+  background: black;
   position: relative;
   z-index: $header-z-index;
   display: flex;
@@ -20,7 +20,7 @@
 
   &__metafox-logo {
     &--icon {
-      height: 32px;
+      height: 40px;
 
       @media screen and (min-width: $break-large) {
         display: none;

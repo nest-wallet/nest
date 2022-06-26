@@ -645,20 +645,12 @@ export default class Home extends PureComponent {
               </Tab>
             </Tabs>
             <div className="home__support">
-              {
-                ///: BEGIN:ONLY_INCLUDE_IN(main)
-                t('needHelp', [
-                  <a
-                    href={SUPPORT_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key="need-help-link"
-                  >
-                    {t('needHelpLinkText')}
-                  </a>,
-                ])
-                ///: END:ONLY_INCLUDE_IN
-              }
+              <img src="images/sheeth-metalic.png" style={{
+                height: '50px',
+                position: 'absolute',
+                bottom: '1px',
+                left: '139px',
+                height: '50px'}}/>
               {
                 ///: BEGIN:ONLY_INCLUDE_IN(beta)
                 <BetaHomeFooter />

@@ -23,22 +23,31 @@
     align-items: center;
     align-content: center;
     height: 100%;
+
+    img {
+      margin-bottom: 20px;
+    }
     .content {
       font-size: 20px;
       margin-top: 16px;
       text-align: center;
       font-weight: bold;
 
+      .success {
+        font-size: 25px;
+        color: white;
+      }
       .step {
         margin-bottom: 40px;
         position: relative;
         h1 {
-          margin-bottom: 10px;
+          margin-bottom: 5px;
+          font-size: 26px;
         }
 
         p {
           color: white !important;
-          font-size: 11px;
+          font-size: 13px;
           font-weight: normal;
         }
 

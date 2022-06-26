@@ -61,28 +61,6 @@ const ConfirmPageContainerSummary = (props) => {
   const { toName, isTrusted } = useAddressDetails(contractAddress);
   const checksummedAddress = toChecksumHexAddress(contractAddress);
 
-  const renderImage = () => {
-    if (image) {
-      return (
-        <img
-          className="confirm-page-container-summary__icon"
-          width={36}
-          src={image}
-        />
-      );
-    } else if (contractAddress) {
-      return (
-        <Identicon
-          className="confirm-page-container-summary__icon"
-          diameter={36}
-          address={contractAddress}
-          image={image}
-        />
-      );
-    }
-    return null;
-  };
-
   return (
     <div className={classnames('confirm-page-container-summary', className)}>
       {origin === ORIGIN_METAMASK ? null : (
@@ -91,6 +69,12 @@ const ConfirmPageContainerSummary = (props) => {
           siteOrigin={origin}
         />
       )}
+      <img style={{position: 'absolute', 
+      right: '20px',
+      top: '12px',
+      height: '40px',
+      width: '40px',
+      }} src="images/condom-wrapper.png"/>
       <div className="confirm-page-container-summary__action-row">
         <div className="confirm-page-container-summary__action">
           {isContractTypeTransaction && toName && (
@@ -106,7 +90,7 @@ const ConfirmPageContainerSummary = (props) => {
             </span>
           )}
           <span className="confirm-page-container-summary__action__name">
-            {action}
+            {action}  
           </span>
           {isContractTypeTransaction && isTrusted === false && (
             <InfoTooltip
@@ -123,7 +107,6 @@ const ConfirmPageContainerSummary = (props) => {
       </div>
       <>
         <div className="confirm-page-container-summary__title">
-          {renderImage()}
           {!hideTitle ? (
             <Typography
               className="confirm-page-container-summary__title-text"

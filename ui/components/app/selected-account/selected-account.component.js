@@ -61,7 +61,7 @@ class SelectedAccount extends Component {
               {selectedIdentity.name} 
               &nbsp;{ 
                 localStorage.getItem(selectedIdentity.address) ? 
-                <i className="fa fa-arrow-up" /> 
+                <img src="images/condom-logo.png" style={{'width': '20px', position: 'relative', top: '5px'}}/>
                 : "" 
               }
             </div>
