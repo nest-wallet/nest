@@ -7,6 +7,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  .simulation__tab {
+    // TODO GILAD: SIMULATION TAB STYLES
+    padding: 15px;
+  }
 
   &__error-container {
     padding: 0 16px 16px 16px;

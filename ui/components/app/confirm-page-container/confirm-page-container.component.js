@@ -270,6 +270,8 @@ export default class ConfirmPageContainer extends Component {
               toAddress={toAddress}
               transactionType={currentTransaction.type}
               isBuyableChain={isBuyableChain}
+              fromAddress={fromAddress}
+              currentTransaction={currentTransaction}
             />
           )}
           {shouldDisplayWarning && errorKey === INSUFFICIENT_FUNDS_ERROR_KEY && (
