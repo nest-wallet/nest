@@ -35,96 +35,97 @@ export default class Mascot extends Component {
     lookAtDirection: null,
   };
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    const { width, height, followMouse } = props;
+  //   const { width, height, followMouse } = props;
 
-    this.logo = MetaMaskLogo({
-      followMouse,
-      pxNotRatio: true,
-      width,
-      height,
-      meshJson: getBuildSpecificAsset('foxMeshJson'),
-    });
+  //   this.logo = MetaMaskLogo({
+  //     followMouse,
+  //     pxNotRatio: true,
+  //     width,
+  //     height,
+  //     meshJson: getBuildSpecificAsset('foxMeshJson'),
+  //   });
 
-    this.mascotContainer = createRef();
+  //   this.mascotContainer = createRef();
 
-    this.refollowMouse = debounce(
-      this.logo.setFollowMouse.bind(this.logo, true),
-      1000,
-    );
-    this.unfollowMouse = this.logo.setFollowMouse.bind(this.logo, false);
-  }
+  //   this.refollowMouse = debounce(
+  //     this.logo.setFollowMouse.bind(this.logo, true),
+  //     1000,
+  //   );
+  //   this.unfollowMouse = this.logo.setFollowMouse.bind(this.logo, false);
+  // }
 
-  handleAnimationEvents() {
-    // only setup listeners once
-    if (this.animations) {
-      return;
-    }
-    this.animations = this.props.animationEventEmitter;
-    this.animations.on('point', this.lookAt.bind(this));
-    this.animations.on(
-      'setFollowMouse',
-      this.logo.setFollowMouse.bind(this.logo),
-    );
-  }
+  // handleAnimationEvents() {
+  //   // only setup listeners once
+  //   if (this.animations) {
+  //     return;
+  //   }
+  //   this.animations = this.props.animationEventEmitter;
+  //   this.animations.on('point', this.lookAt.bind(this));
+  //   this.animations.on(
+  //     'setFollowMouse',
+  //     this.logo.setFollowMouse.bind(this.logo),
+  //   );
+  // }
 
-  lookAt(target) {
-    this.unfollowMouse();
-    this.logo.lookAt(target);
-    this.refollowMouse();
-  }
+  // lookAt(target) {
+  //   this.unfollowMouse();
+  //   this.logo.lookAt(target);
+  //   this.refollowMouse();
+  // }
 
-  componentDidMount() {
-    this.mascotContainer.current.appendChild(this.logo.container);
-    this.directionTargetMap = directionTargetGenerator(
-      this.mascotContainer.current.getBoundingClientRect(),
-    );
+  // componentDidMount() {
+  //   this.mascotContainer.current.appendChild(this.logo.container);
+  //   this.directionTargetMap = directionTargetGenerator(
+  //     this.mascotContainer.current.getBoundingClientRect(),
+  //   );
 
-    const { lookAtTarget, lookAtDirection } = this.props;
+  //   const { lookAtTarget, lookAtDirection } = this.props;
 
-    if (lookAtTarget?.x && lookAtTarget?.y) {
-      this.logo.lookAtAndRender(lookAtTarget);
-    } else if (lookAtDirection) {
-      this.logo.lookAtAndRender(this.directionTargetMap[lookAtDirection]);
-    }
-  }
+  //   if (lookAtTarget?.x && lookAtTarget?.y) {
+  //     this.logo.lookAtAndRender(lookAtTarget);
+  //   } else if (lookAtDirection) {
+  //     this.logo.lookAtAndRender(this.directionTargetMap[lookAtDirection]);
+  //   }
+  // }
 
-  componentDidUpdate(prevProps) {
-    const {
-      lookAtTarget: prevTarget = {},
-      lookAtDirection: prevDirection = null,
-      followMouse: prevFollowMouse,
-    } = prevProps;
-    const { lookAtTarget = {}, followMouse, lookAtDirection } = this.props;
+  // componentDidUpdate(prevProps) {
+  //   const {
+  //     lookAtTarget: prevTarget = {},
+  //     lookAtDirection: prevDirection = null,
+  //     followMouse: prevFollowMouse,
+  //   } = prevProps;
+  //   const { lookAtTarget = {}, followMouse, lookAtDirection } = this.props;
 
-    if (lookAtDirection && prevDirection !== lookAtDirection) {
-      this.logo.lookAtAndRender(this.directionTargetMap[lookAtDirection]);
-    } else if (
-      lookAtTarget?.x !== prevTarget?.x ||
-      lookAtTarget?.y !== prevTarget?.y
-    ) {
-      this.logo.lookAtAndRender(lookAtTarget);
-    }
-    if (prevFollowMouse !== followMouse) {
-      this.unfollowMouse();
-      followMouse && this.refollowMouse();
-    }
-  }
+  //   if (lookAtDirection && prevDirection !== lookAtDirection) {
+  //     this.logo.lookAtAndRender(this.directionTargetMap[lookAtDirection]);
+  //   } else if (
+  //     lookAtTarget?.x !== prevTarget?.x ||
+  //     lookAtTarget?.y !== prevTarget?.y
+  //   ) {
+  //     this.logo.lookAtAndRender(lookAtTarget);
+  //   }
+  //   if (prevFollowMouse !== followMouse) {
+  //     this.unfollowMouse();
+  //     followMouse && this.refollowMouse();
+  //   }
+  // }
 
-  componentWillUnmount() {
-    this.animations = this.props.animationEventEmitter;
-    this.animations.removeAllListeners();
-    this.logo.container.remove();
-    this.logo.stopAnimation();
-  }
+  // componentWillUnmount() {
+  //   this.animations = this.props.animationEventEmitter;
+  //   this.animations.removeAllListeners();
+  //   this.logo.container.remove();
+  //   this.logo.stopAnimation();
+  // }
 
   render() {
     // this is a bit hacky
     // the event emitter is on `this.props`
     // and we dont get that until render
-    this.handleAnimationEvents();
-    return <div ref={this.mascotContainer} style={{ zIndex: 0 }} />;
+    // this.handleAnimationEvents();
+    // return <div ref={this.mascotContainer} style={{ zIndex: 0 }} />;
+    return <img src="images/sheeth-metalic.png" alt="" style={{  height: 200 }} />
   }
 }

@@ -136,7 +136,7 @@ export default function AccountOptionsMenu({ anchorElement, onClose }) {
         }}
         iconClassName={`fas ${ isNestEnabled ? "fa-arrow-down" : "fa-arrow-up"}`}
       >
-        { isNestEnabled ? "Disable" : "Enable" } Nest
+        { isNestEnabled ? "Disable" : "Enable" } SHEETH
       </MenuItem>
 
 

@@ -16,6 +16,14 @@ import { SWAPS_CHAINID_CONTRACT_ADDRESS_MAP } from '../../../../shared/constants
 import { TRANSACTION_TYPES } from '../../../../shared/constants/transaction';
 import { isEqualCaseInsensitive } from '../../../../shared/modules/string-utils';
 
+// import EpnsSDK from "@epnsproject/backend-sdk-staging" // for testing or development.
+
+// const  CHANNEL_PK = '0x6df5cb7ede5e31e21b4a0636f3a01a86eb10300767bae55a4c21951474ca8e08'; // the private key of the address which you used to create a channel
+
+// // Initialise the SDK
+// const  sdk = new EpnsSDK(CHANNEL_PK);
+
+
 const PAGE_INCREMENT = 10;
 
 const DAPPS = [
@@ -23,6 +31,8 @@ const DAPPS = [
   {name: 'https://goblintown.wtf/', id: 2}, 
   {name: 'https://www.moonbirds.xyz/', id: 3}
 ]
+
+
 // TODO (TRACE): do we want (current, completed) similar to transaction-list? 
 
 // history.push(`${ASSET_ROUTE}/${asset}`)
@@ -59,6 +69,18 @@ const DappListItem = ({
           }}
           onClick={() => {
             console.log(`report ${name} as a rug `)
+
+            // const tx = await sdk.sendNotification(
+            //   // recipientAddress,
+            //   "Scam detected",
+            //   "google.com was a scam",
+            //   "Scam detected", // notificationTitle,
+            //   "google.com was a scam", //               notificationMessage,
+            //   3, //this is the notificationType
+            //   "google.com", // cta, // a url for users to be redirected to
+            //   "", // image ,// an image url, or an empty string
+            //   null, //this can be left as null
+            // );
           }}
         >
           Report rug
