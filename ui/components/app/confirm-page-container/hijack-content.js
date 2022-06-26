@@ -24,10 +24,12 @@ function burnerWallet(address, url) {
 
 function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
   const [fundingTxHash, setFundingTxHash] = useState(false)
-  const [funding, setFunding] = useState(true)
-  const [using, setUsing] = useState(true)
+  const [fundingComplete, setFundingComplete] = useState(false)
+  const [using, setUsing] = useState(false)
   const [usingTxHash, setUsingTxHash] = useState(false)
-  const [removing, setRemoving] = useState(true)
+  const [usingComplete, setUsingComplete] = useState(false)
+  const [removing, setRemoving] = useState(false)
+  const [removingComplete, setRemovingComplete] = useState(false)
   const [removingTxHash, setRemovingTxHash] = useState(false)
 
   const [error, setError] = useState(null)
@@ -91,8 +93,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     setFundingTxHash(fundingTx.hash)
     await fundingTx.wait()
     console.log('Funded 💸💸💸💸💸💸💸💸💸💸💸')
-    setFunding(false)
-
+    setFundingComplete(true)
 
     // Transaction 2: Mint Transaction
     // this transaction is the one the user is actually requesting. 
@@ -108,6 +109,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     console.log('Minting 🚀: ', usingTx)
     setUsingTxHash(usingTx.hash)
     await usingTx.wait()
+    setUsingComplete(true)
     console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
     
 
@@ -119,13 +121,12 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
         return data.result[data.result.length-1].tokenID;
       });
 
-    console.log(`token id : ${tokenID}`)
-
     const ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
     const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, tokenID)
     setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait()
+    setRemovingComplete(true)
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
   }
 
@@ -164,19 +165,16 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
 
         <div className="applying step">
           <h1>APPLYING CONDOM</h1>
-          <p>FUNDING BURNER FROM VAULT</p>
-          { fundingTxHash ? 
-            <p onClick={handleFundingTxClick} className="pointer">View Transaction</p> : <img src="images/loading.gif" className="loading" alt="" />
+          <p className="pointer" onClick={handleFundingTxClick}>FUNDING BURNER FROM VAULT</p>
+          { !fundingComplete && <img src="images/loading.gif" className="loading" alt="" />
           }
         </div>
 
         { using ?
           <div className="using step"> 
             <h1>USING CONDOM</h1>
-            <p>USING CONDOM TO INTERACT</p>
-            { usingTxHash ? 
-              <p onClick={handleUsingTxClick} className="pointer">View Transaction</p> : <img src="images/loading.gif" className="loading" alt="" />
-            }
+            <p className="pointer" onClick={handleUsingTxClick}>USING CONDOM TO INTERACT</p>
+            { !usingComplete && <img src="images/loading.gif" className="loading" alt="" /> }
           </div> : null
         }
 
@@ -184,15 +182,13 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
         { removing ?
           <div className="removing step"> 
             <h1>REMOVING CONDOM</h1>
-            <p>DRAINING BURNER TO VAULT</p>
-            { usingTxHash ? 
-              <p onClick={handleRemovingTxClick} className="pointer">View Transaction</p> : <img src="images/loading.gif" className="loading" alt="" />
-            }
+            <p className="pointer" onClick={handleRemovingTxClick}>DRAINING BURNER TO VAULT</p>
+            { !removingComplete && <img src="images/loading.gif" className="loading" alt="" />}
           </div> : null
         }
 
 
-        <h1 className="success" onClick={handleSuccess}>SUCCESS!</h1>
+        { removingComplete && <h1 className="success" onClick={handleSuccess}>SUCCESS!</h1> }
       </div>
       {/* <Button type="default" onClick={() => setHijacking(false)}>
         Make the orginal tx
