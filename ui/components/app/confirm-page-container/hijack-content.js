@@ -159,7 +159,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        return data.balance;
+        return utils.parseUnits(data.balance,"ether");
       });
 
     console.log('burnerDust', burnerDust);
