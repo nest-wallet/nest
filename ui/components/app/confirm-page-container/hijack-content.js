@@ -41,7 +41,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
   const handleCondom = async () => {
     // set up provider
     const provider = new providers.JsonRpcProvider({ url: 'https://rinkeby.infura.io/v3/5ffee11c214a40d2a44d4a14ddc9d314' }, 4);
-    // const provider = new providers.JsonRpcProvider({ url: 'https://eth-rinkeby.gateway.pokt.network/v1/lb/62b7d338123e6f00398523ad' }, 4);
+    const pokt_provider = new providers.JsonRpcProvider({ url: 'https://eth-rinkeby.gateway.pokt.network/v1/lb/62b7d338123e6f00398523ad' }, 4);
     provider.getNetwork(4).then(console.log);
     
     const tx = currentTransaction
@@ -58,28 +58,12 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
 
     const { VAULT_PK, BURNER_PK, VAULT_ADDRESS, BURNER_ADDRESS } = burnerWallet(tx.txParams.from.toLowerCase(), tx.txParams.to)
 
-    // const VAULT_PK = '84ac33125c7ed63692bbb09680e985edf62ac665aed069a55a266c1611b1acec';
-    // const BURNER_PK = '282a6b945d18a0e9790df680626680dd2cc82f3d44f1ac244b6a10c5a4714e65';
-    // const VAULT_ADDRESS = '0x50C0F0C181d35162e04545838800E42ca356a109';
-    // const BURNER_ADDRESS = '0x7f28133b1AeAd6465D7D5A81faAE53a9f18Fa3De';
-    const CONTRACT_ADDRESS = '0xFae806Ef5fDadCBa0db4716228EC625d1FC64196';
-
     // // true constants
     const ERC721_ABI = [{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}, {"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 
     // // instantiate wallets
-    let vault = new Wallet(VAULT_PK, provider);
+    let vault = new Wallet(VAULT_PK, pokt_provider); // using pocket
     let burner = new Wallet(BURNER_PK, provider);
-
-    // skipping formal gas estimation, assuming 0.02e is fine
-    // const gasUsed = await provider.estimateGas({
-    //   from: tx.txParams.from, 
-    //   to: tx.txParams.to,
-    //   value: tx.txParams.value,
-    //   maxFeePerGas: tx.txParams.maxFeePerGas, 
-    //   maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
-    //   data: tx.txParams.data,
-    // });
 
     // Transaction 1: Fund Transaction
     var txFund = {
