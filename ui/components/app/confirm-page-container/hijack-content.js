@@ -4,22 +4,14 @@ import { providers, Wallet, utils, Contract } from "ethers";
 
 
 export default function HijackContent({setHijacking, currentTransaction}) {
-  const [txHash, setTxHash] = useState(false)
+  const [fundingTxHash, setFundingTxHash] = useState(false)
   const [funding, setFunding] = useState(true)
   const [using, setUsing] = useState(false)
+  const [usingTxHash, setUsingTxHash] = useState(false)
   const [removing, setRemoving] = useState(false)
+  const [removingTxHash, setRemovingTxHash] = useState(false)
 
   const [error, setError] = useState(null)
-
-  let step = 'Funding'
-
-  if (using) {
-    step = 'Using'
-  }
-
-  if (removing) { 
-    step = 'Removing'
-  }
 
   useEffect(() => {
     handleCondom()
@@ -65,12 +57,15 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     };
     const fundingTx = await vault.sendTransaction(txFund)
     console.log('Funding 💸: ', fundingTx)
-    setTxHash(fundingTx.hash)
+    setFundingTxHash(fundingTx.hash)
     await fundingTx.wait()
     console.log('Funded 💸💸💸💸💸💸💸💸💸💸💸')
     setFunding(false)
+
+
     // Transaction 2: Mint Transaction
     // this transaction is the one the user is actually requesting. 
+    setUsing(true)
     const txMint = {
       to: tx.txParams.to,
       value: tx.txParams.value,
@@ -78,33 +73,73 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
       data: tx.txParams.data,
     };
-
-
-    setUsing(true)
     const usingTx = await burner.sendTransaction(txMint)
     console.log('Minting 🚀: ', usingTx)
-    setTxHash(usingTx.hash)
+    setUsingTxHash(usingTx.hash)
     await usingTx.wait()
     console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
-    setUsing(false)
-    setRemoving(true)
+    
 
     // Transaction 3: Drain Transaction
+    setRemoving(true)
     const ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
     const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, token_id)
-    setTxHash(drainTx.hash)
+    setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait()
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
   }
 
+  const handleFundingTxClick = () => {
+    global.platform.openTab({
+      url: `https://rinkeby.etherscan.io/tx/${fundingTxHash}`,
+      active: false
+    });
+  }
+
+  const handleUsingTxClick = () => {
+    global.platform.openTab({
+      url: `https://rinkeby.etherscan.io/tx/${usingTxHash}`,
+      active: false
+    });
+  }
+
+  const handleRemovingTxClick = () => {
+    global.platform.openTab({
+      url: `https://rinkeby.etherscan.io/tx/${removingTxHash}`,
+      active: false
+    });
+  }
+
   return (
     <div className="confirm-page-container-content__details hijack-content">
       <div className="content">
-        <h1>{step} Condom</h1>
-        <h1>..............</h1>
-        { txHash ? 
-          <a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target="_blank">View {step} transaction</a> : null
+        <img src="images/sheeth-metalic.png" alt="" />
+
+        <div className="applying step">
+          <h1>APPLYING CONDOM</h1>
+          { fundingTxHash ? 
+            <h1 onClick={handleFundingTxClick} target="_blank">View Transaction</h1> : null
+          }
+        </div>
+
+        { using ?
+          <div className="using step"> 
+            <h1>USING CONDOM</h1>
+            { usingTxHash ? 
+              <h1 onClick={handleFundingTxClick} target="_blank">View Transaction</h1> : null
+            }
+          </div> : null
+        }
+
+
+        { removing ?
+          <div className="removing step"> 
+            <h1>REMOVING CONDOM</h1>
+            { usingTxHash ? 
+              <h1 onClick={handleFundingTxClick} target="_blank">View Transaction</h1> : null
+            }
+          </div> : null
         }
       </div>
       {/* <Button type="default" onClick={() => setHijacking(false)}>

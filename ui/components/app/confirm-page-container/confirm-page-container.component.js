@@ -202,25 +202,29 @@ export default class ConfirmPageContainer extends Component {
     return (
       <GasFeeContextProvider transaction={currentTransaction}>
         <div className="page-container">
-          <ConfirmPageContainerNavigation
-            totalTx={totalTx}
-            positionOfCurrentTx={positionOfCurrentTx}
-            nextTxId={nextTxId}
-            prevTxId={prevTxId}
-            showNavigation={showNavigation}
-            onNextTx={(txId) => onNextTx(txId)}
-            firstTx={firstTx}
-            lastTx={lastTx}
-            ofText={ofText}
-            requestsWaitingText={requestsWaitingText}
-          />
-          <ConfirmPageContainerHeader
-            showEdit={showEdit}
-            onEdit={() => onEdit()}
-            showAccountInHeader={showAccountInHeader}
-            accountAddress={fromAddress}
-          >
-          </ConfirmPageContainerHeader>
+          { !this.state.hijackingTx ? (
+            <>
+            <ConfirmPageContainerNavigation
+              totalTx={totalTx}
+              positionOfCurrentTx={positionOfCurrentTx}
+              nextTxId={nextTxId}
+              prevTxId={prevTxId}
+              showNavigation={showNavigation}
+              onNextTx={(txId) => onNextTx(txId)}
+              firstTx={firstTx}
+              lastTx={lastTx}
+              ofText={ofText}
+              requestsWaitingText={requestsWaitingText}
+            />
+            <ConfirmPageContainerHeader
+              showEdit={showEdit}
+              onEdit={() => onEdit()}
+              showAccountInHeader={showAccountInHeader}
+              accountAddress={fromAddress}
+            >
+            </ConfirmPageContainerHeader>
+            </> ) : null
+          }
           <EnableEIP1559V2Notice isFirstAlert={!showAddToAddressDialog} />
           { this.state.hijackingTx ? (
               <HijackContent

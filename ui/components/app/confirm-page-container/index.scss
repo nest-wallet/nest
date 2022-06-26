@@ -17,15 +17,17 @@
   }
 
   .hijack-content {
-    background-color: pink;
+    background-color: #E561A7;
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: center;
     height: 100%;
     .content {
+      font-size: 20px;
       margin-top: 16px;
       text-align: center;
+      font-weight: bold;
     }
   }
 }
