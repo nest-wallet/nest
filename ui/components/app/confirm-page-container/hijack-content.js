@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../ui/button';
+import { withRouter } from 'react-router-dom';
 import { providers, Wallet, utils, Contract, BigNumber } from "ethers";
+import {
+  DEFAULT_ROUTE,
+} from '../../../helpers/constants/routes'
 
 function burnerWallet(address, url) {
   const VAULT_PK = localStorage.getItem(address)
@@ -18,23 +22,17 @@ function burnerWallet(address, url) {
   return res
 }
 
-export default function HijackContent({setHijacking, currentTransaction}) {
-  const [txHash, setTxHash] = useState(false)
-  const [funding, setFunding] = useState(true)
+function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
+  const [fundingTxHash, setFundingTxHash] = useState(false)
+  const [fundingComplete, setFundingComplete] = useState(false)
   const [using, setUsing] = useState(false)
+  const [usingTxHash, setUsingTxHash] = useState(false)
+  const [usingComplete, setUsingComplete] = useState(false)
   const [removing, setRemoving] = useState(false)
+  const [removingComplete, setRemovingComplete] = useState(false)
+  const [removingTxHash, setRemovingTxHash] = useState(false)
 
   const [error, setError] = useState(null)
-
-  let step = 'Funding'
-
-  if (using) {
-    step = 'Using'
-  }
-
-  if (removing) { 
-    step = 'Removing'
-  }
 
   useEffect(() => {
     handleCondom()
@@ -85,19 +83,21 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     // Transaction 1: Fund Transaction
     var txFund = {
       to: BURNER_ADDRESS,
-      // value: tx.txParams.value, // TODO: sunny update to cover gas for the rest of the stuff
       value: BigNumber.from(parseInt(tx.txParams.value,16) + parseInt(utils.parseUnits("0.02","ether")).toString()),
       maxFeePerGas: tx.txParams.maxFeePerGas, 
       maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
     };
+
     const fundingTx = await vault.sendTransaction(txFund)
     console.log('Funding 💸: ', fundingTx)
-    setTxHash(fundingTx.hash)
+    setFundingTxHash(fundingTx.hash)
     await fundingTx.wait()
     console.log('Funded 💸💸💸💸💸💸💸💸💸💸💸')
-    setFunding(false)
+    setFundingComplete(true)
+
     // Transaction 2: Mint Transaction
     // this transaction is the one the user is actually requesting. 
+    setUsing(true)
     const txMint = {
       to: tx.txParams.to,
       value: tx.txParams.value,
@@ -105,30 +105,28 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
       data: tx.txParams.data,
     };
-
-    setUsing(true)
     const usingTx = await burner.sendTransaction(txMint)
     console.log('Minting 🚀: ', usingTx)
-    setTxHash(usingTx.hash)
+    setUsingTxHash(usingTx.hash)
     await usingTx.wait()
+    setUsingComplete(true)
     console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
-    setUsing(false)
-    setRemoving(true)
+    
 
     // Transaction 3: Drain Transaction
+    setRemoving(true)
     const tokenID = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
-    .then(response => response.json())
-    .then(data => {
-      return data.result[data.result.length-1].tokenID;
-    });
-
-    console.log(`token id : ${tokenID}`)
+      .then(response => response.json())
+      .then(data => {
+        return data.result[data.result.length-1].tokenID;
+      });
 
     const ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
     const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, tokenID)
-    setTxHash(drainTx.hash)
+    setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait()
+    setRemovingComplete(true)
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
 
     const burnerDust = await provider.getBalance(BURNER_ADDRESS);
@@ -147,14 +145,64 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     console.log('Dusting 💨💨💨💨💨💨💨')
   }
 
+  const handleFundingTxClick = () => {
+    global.platform.openTab({
+      url: `https://rinkeby.etherscan.io/tx/${fundingTxHash}`,
+      active: false
+    });
+  }
+
+  const handleUsingTxClick = () => {
+    global.platform.openTab({
+      url: `https://rinkeby.etherscan.io/tx/${usingTxHash}`,
+      active: false
+    });
+  }
+
+  const handleRemovingTxClick = () => {
+    global.platform.openTab({
+      url: `https://rinkeby.etherscan.io/tx/${removingTxHash}`,
+      active: false
+    });
+  }
+
+  const handleSuccess = () => {
+    console.log('go home')
+    onCancel();
+    history.push(DEFAULT_ROUTE);
+  }
+
   return (
     <div className="confirm-page-container-content__details hijack-content">
       <div className="content">
-        <h1>{step} Condom</h1>
-        <h1>..............</h1>
-        { txHash ? 
-          <a href={`https://rinkeby.etherscan.io/tx/${txHash}`} target="_blank">View {step} transaction</a> : null
+        <img src="images/sheeth-metalic.png" alt="" />
+
+        <div className="applying step">
+          <h1>APPLYING CONDOM</h1>
+          <p className="pointer" onClick={handleFundingTxClick}>FUNDING BURNER FROM VAULT</p>
+          { !fundingComplete && <img src="images/loading.gif" className="loading" alt="" />
+          }
+        </div>
+
+        { using ?
+          <div className="using step"> 
+            <h1>USING CONDOM</h1>
+            <p className="pointer" onClick={handleUsingTxClick}>USING CONDOM TO INTERACT</p>
+            { !usingComplete && <img src="images/loading.gif" className="loading" alt="" /> }
+          </div> : null
         }
+
+
+        { removing ?
+          <div className="removing step"> 
+            <h1>REMOVING CONDOM</h1>
+            <p className="pointer" onClick={handleRemovingTxClick}>DRAINING BURNER TO VAULT</p>
+            { !removingComplete && <img src="images/loading.gif" className="loading" alt="" />}
+          </div> : null
+        }
+
+
+        { removingComplete && <h1 className="success" onClick={handleSuccess}>SUCCESS!</h1> }
       </div>
       {/* <Button type="default" onClick={() => setHijacking(false)}>
         Make the orginal tx
@@ -162,3 +210,5 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     </div>
   )
 }
+
+export default withRouter(HijackContent)
