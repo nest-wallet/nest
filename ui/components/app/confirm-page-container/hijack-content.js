@@ -41,6 +41,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
   const handleCondom = async () => {
     // set up provider
     const provider = new providers.JsonRpcProvider({ url: 'https://rinkeby.infura.io/v3/5ffee11c214a40d2a44d4a14ddc9d314' }, 4);
+    // const provider = new providers.JsonRpcProvider({ url: 'https://eth-rinkeby.gateway.pokt.network/v1/lb/62b7d338123e6f00398523ad' }, 4);
     provider.getNetwork(4).then(console.log);
     
     const tx = currentTransaction
@@ -154,12 +155,12 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
         'x-testnet-type': 'ethereum-rinkeby'
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      return data.balance;
-    });
-    
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        return utils.parseUnits(data.balance,"ether");
+      });
+
     console.log('burnerDust', burnerDust);
     
     var txDefund = {
