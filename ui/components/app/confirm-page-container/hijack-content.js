@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../ui/button';
 import { providers, Wallet, utils, Contract } from "ethers";
+// import { DEFAULT_ROUTE } from '../../../../helpers/constants/routes';
 
+function burnerWallet(address, url) {
+  const VAULT_PK = localStorage.getItem(address)
+  const BURNER_PK = utils.keccak256(utils.toUtf8Bytes(`${VAULT_PK},${url}`)).slice(2) 
+  const VAULT_ADDRESS = (new Wallet(VAULT_PK)).address.toLowerCase()
+  const BURNER_ADDRESS = (new Wallet(BURNER_PK)).address.toLowerCase()
+
+  const res = { 
+    VAULT_PK, 
+    BURNER_PK,
+    VAULT_ADDRESS,
+    BURNER_ADDRESS
+  }
+  console.log(res)
+  return res
+}
 
 export default function HijackContent({setHijacking, currentTransaction}) {
   const [fundingTxHash, setFundingTxHash] = useState(false)
   const [funding, setFunding] = useState(true)
-  const [using, setUsing] = useState(false)
+  const [using, setUsing] = useState(true)
   const [usingTxHash, setUsingTxHash] = useState(false)
-  const [removing, setRemoving] = useState(false)
+  const [removing, setRemoving] = useState(true)
   const [removingTxHash, setRemovingTxHash] = useState(false)
 
   const [error, setError] = useState(null)
@@ -34,11 +50,12 @@ export default function HijackContent({setHijacking, currentTransaction}) {
       value: ${tx.txParams.value}
     `)
 
-    // // get these from Tim 
-    const VAULT_PK = '84ac33125c7ed63692bbb09680e985edf62ac665aed069a55a266c1611b1acec';
-    const BURNER_PK = '282a6b945d18a0e9790df680626680dd2cc82f3d44f1ac244b6a10c5a4714e65';
-    const VAULT_ADDRESS = '0x50C0F0C181d35162e04545838800E42ca356a109';
-    const BURNER_ADDRESS = '0x7f28133b1AeAd6465D7D5A81faAE53a9f18Fa3De';
+    const { VAULT_PK, BURNER_PK, VAULT_ADDRESS, BURNER_ADDRESS } = burnerWallet(tx.txParams.from.toLowerCase(), tx.txParams.to)
+
+    // const VAULT_PK = '84ac33125c7ed63692bbb09680e985edf62ac665aed069a55a266c1611b1acec';
+    // const BURNER_PK = '282a6b945d18a0e9790df680626680dd2cc82f3d44f1ac244b6a10c5a4714e65';
+    // const VAULT_ADDRESS = '0x50C0F0C181d35162e04545838800E42ca356a109';
+    // const BURNER_ADDRESS = '0x7f28133b1AeAd6465D7D5A81faAE53a9f18Fa3De';
     const CONTRACT_ADDRESS = '0xFae806Ef5fDadCBa0db4716228EC625d1FC64196';
 
     // // true constants
@@ -51,10 +68,11 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     // Transaction 1: Fund Transaction
     var txFund = {
       to: BURNER_ADDRESS,
-      value: tx.txParams.value, // TODO: sunny update to cover gas for the rest of the stuff
+      value: tx.txParams.value,  // TODO: sunny update to cover gas for the rest of the stuff
       maxFeePerGas: tx.txParams.maxFeePerGas, 
       maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
     };
+
     const fundingTx = await vault.sendTransaction(txFund)
     console.log('Funding 💸: ', fundingTx)
     setFundingTxHash(fundingTx.hash)
@@ -82,8 +100,16 @@ export default function HijackContent({setHijacking, currentTransaction}) {
 
     // Transaction 3: Drain Transaction
     setRemoving(true)
+    const tokenID = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
+      .then(response => response.json())
+      .then(data => {
+        return data.result[data.result.length-1].tokenID;
+      });
+
+    console.log(`token id : ${tokenID}`)
+
     const ctr = new Contract(tx.txParams.to, ERC721_ABI, burner);
-    const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, token_id)
+    const drainTx = await ctr['transferFrom'](BURNER_ADDRESS, VAULT_ADDRESS, tokenID)
     setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait()
@@ -111,6 +137,10 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     });
   }
 
+  const handleSuccess = () => {
+    // history.push(DEFAULT_ROUTE);
+  }
+
   return (
     <div className="confirm-page-container-content__details hijack-content">
       <div className="content">
@@ -118,16 +148,18 @@ export default function HijackContent({setHijacking, currentTransaction}) {
 
         <div className="applying step">
           <h1>APPLYING CONDOM</h1>
+          <p>FUNDING BURNER FROM VAULT</p>
           { fundingTxHash ? 
-            <h1 onClick={handleFundingTxClick} target="_blank">View Transaction</h1> : null
+            <p onClick={handleFundingTxClick} className="pointer">View Transaction</p> : <img src="images/loading.gif" className="loading" alt="" />
           }
         </div>
 
         { using ?
           <div className="using step"> 
             <h1>USING CONDOM</h1>
+            <p>USING CONDOM TO INTERACT</p>
             { usingTxHash ? 
-              <h1 onClick={handleFundingTxClick} target="_blank">View Transaction</h1> : null
+              <p onClick={handleUsingTxClick} className="pointer">View Transaction</p> : <img src="images/loading.gif" className="loading" alt="" />
             }
           </div> : null
         }
@@ -136,11 +168,15 @@ export default function HijackContent({setHijacking, currentTransaction}) {
         { removing ?
           <div className="removing step"> 
             <h1>REMOVING CONDOM</h1>
+            <p>DRAINING BURNER TO VAULT</p>
             { usingTxHash ? 
-              <h1 onClick={handleFundingTxClick} target="_blank">View Transaction</h1> : null
+              <p onClick={handleRemovingTxClick} className="pointer">View Transaction</p> : <img src="images/loading.gif" className="loading" alt="" />
             }
           </div> : null
         }
+
+
+        <h1 className="success" onClick={handleSuccess}>SUCCESS!</h1>
       </div>
       {/* <Button type="default" onClick={() => setHijacking(false)}>
         Make the orginal tx

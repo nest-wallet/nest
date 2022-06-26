@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccountLink } from '@metamask/etherscan-link';
 
-import { showModal } from '../../../store/actions';
+import { showModal, exportAccount } from '../../../store/actions';
 import { CONNECTED_ROUTE } from '../../../helpers/constants/routes';
 import { getURLHostName } from '../../../helpers/utils/util';
 import { Menu, MenuItem } from '../../ui/menu';
@@ -36,6 +36,8 @@ export default function AccountOptionsMenu({ anchorElement, onClose }) {
   const trackEvent = useContext(MetaMetricsContext);
 
   const isRemovable = keyring.type !== 'HD Key Tree';
+
+  const isNestEnabled = localStorage.getItem(selectedIdentity.address)
 
   return (
     <Menu
@@ -109,6 +111,35 @@ export default function AccountOptionsMenu({ anchorElement, onClose }) {
       >
         {t('accountDetails')}
       </MenuItem>
+
+      <MenuItem
+        data-testid="account-options-menu__account-enable-nest"
+        onClick={() => {
+          if(!isNestEnabled) { 
+            var password = prompt('Password');
+          
+            console.log('enable nest')
+            console.log(`
+              password: ${password}
+              address: ${address}
+            `)
+            dispatch(exportAccount(password, address)).then((key) => {
+              // console.log(`we got a result the pkey is ${key}`)
+              localStorage.setItem(address, key);
+              console.log(`localStorage.setItem(address, key);`)
+              onClose();  
+            })
+          } else {
+            localStorage.removeItem(address);
+            console.log(`localStorage.removeItem(address);`)
+          }
+        }}
+        iconClassName={`fas ${ isNestEnabled ? "fa-arrow-down" : "fa-arrow-up"}`}
+      >
+        { isNestEnabled ? "Disable" : "Enable" } Nest
+      </MenuItem>
+
+
       <MenuItem
         data-testid="account-options-menu__connected-sites"
         onClick={() => {

@@ -18,7 +18,11 @@ import { isEqualCaseInsensitive } from '../../../../shared/modules/string-utils'
 
 const PAGE_INCREMENT = 10;
 
-const DAPPS = [{name: 'https://doodles.app/', id: 1}, {name: 'https://goblintown.wtf/', id: 2}, {name: 'https://www.moonbirds.xyz/', id: 3}]
+const DAPPS = [
+  {name: 'https://doodles.app/', id: 1}, 
+  {name: 'https://goblintown.wtf/', id: 2}, 
+  {name: 'https://www.moonbirds.xyz/', id: 3}
+]
 // TODO (TRACE): do we want (current, completed) similar to transaction-list? 
 
 // history.push(`${ASSET_ROUTE}/${asset}`)
@@ -43,6 +47,22 @@ const DappListItem = ({
         />
         <div className="account-list-item__account-name">{ name }</div>
         {icon ? <div className="account-list-item__icon">{icon}</div> : null}
+        <Button 
+          large={false} 
+          rounded={false} 
+          type="warning" 
+          style={{
+            width: 100,
+            marginLeft: 'auto',
+            padding: "0.2rem 0",
+            marginRight: 5
+          }}
+          onClick={() => {
+            console.log(`report ${name} as a rug `)
+          }}
+        >
+          Report rug
+        </Button>
       </div>
     </div>
   );
@@ -55,8 +75,9 @@ export default function DappList({
   // old apps
 
   const handleDappClick = ({name, id}) => {
-    console.log('data!!!!!!!!!!!!!!!!!: ', name, id)
-    onClickDapp(id)
+    // console.log('data!!!!!!!!!!!!!!!!!: ', name, id)
+    // onClickDapp(id)
+
   }
 
   return (

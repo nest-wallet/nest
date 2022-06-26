@@ -124,8 +124,6 @@ export default class ConfirmPageContainer extends Component {
 
   setHijacking = hijackingTx => this.setState({hijackingTx})
 
-  
-
   render() {
     const {
       showEdit,
