@@ -59,7 +59,7 @@ class SelectedAccount extends Component {
           >
             <div className="selected-account__name">
               {selectedIdentity.name} 
-              { 
+              &nbsp;{ 
                 localStorage.getItem(selectedIdentity.address) ? 
                 <i className="fa fa-arrow-up" /> 
                 : "" 
