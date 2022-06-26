@@ -65,6 +65,42 @@ export default class ConfirmPageContainerContent extends Component {
     return detailsComponent || dataComponent;
   }
 
+  handleSimulate = () => {
+    const { fromAddress, toAddress, currentTransaction } = this.props;
+    const TENDERLY_USER = 'freeslugs@gmail.com' // 'freeslugs', 
+    const TENDERLY_PROJECT = 'test' 
+    const TENDERLY_ACCESS_KEY = 'OM793dakPccX8xQfi1RGh9rPO82VI2cV'
+    const SIMULATE_URL = `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/simulate`
+
+    // set up your access-key, if you don't have one or you want to generate new one follow next link
+    // https://dashboard.tenderly.co/account/authorization
+    const opts = {
+      headers: {
+        'X-Access-Key': TENDERLY_ACCESS_KEY,
+      }
+    }
+
+    console.log('current transaction: ', currentTransaction)
+    const body = {
+      // standard TX fields
+      "network_id": "1",
+      "from": fromAddress,
+      "to": toAddress,
+      "input": currentTransaction.txParams.data,
+      "gas": 21204,
+      "gas_price": "0",
+      "value": 0,
+      // simulation config (tenderly specific)
+      "save_if_fails": true,
+      "save": false,
+      "simulation_type": "quick"
+    }
+
+    console.log('body: ', body)
+
+    // const resp = await axios.post(SIMULATE_URL, body, opts);
+  }
+
   renderTabs() {
     const { t } = this.context;
     const { detailsComponent, dataComponent, dataHexComponent } = this.props;
@@ -88,6 +124,12 @@ export default class ConfirmPageContainerContent extends Component {
             {dataHexComponent}
           </Tab>
         )}
+        <Tab className="confirm-page-container-content__tab" name="Simulation">
+          <div className="simulation__tab">
+            {/* TODO GILAD - SIMULATION TAB */}
+            <button onClick={this.handleSimulate}>SIMULATE</button>
+          </div>
+        </Tab>
       </Tabs>
     );
   }
