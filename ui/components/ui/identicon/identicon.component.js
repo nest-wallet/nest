@@ -9,6 +9,7 @@ const getStyles = (diameter) => ({
   height: diameter,
   width: diameter,
   borderRadius: diameter / 2,
+  border: '1px solid #E561A7'
 });
 
 export default class Identicon extends PureComponent {
@@ -92,7 +93,7 @@ export default class Identicon extends PureComponent {
         className={classnames('identicon', className, {
           'identicon__image-border': imageBorder,
         })}
-        src={image}
+        src="images/blitz.png"
         style={getStyles(diameter)}
         alt={alt}
       />
@@ -109,15 +110,7 @@ export default class Identicon extends PureComponent {
       tokenList,
     } = this.props;
     return (
-      <Jazzicon
-        address={address}
-        diameter={diameter}
-        className={classnames('identicon', className)}
-        style={getStyles(diameter)}
-        alt={alt}
-        useTokenDetection={useTokenDetection}
-        tokenList={tokenList}
-      />
+      <img src="images/blitz.png"/>
     );
   }
 
@@ -129,7 +122,7 @@ export default class Identicon extends PureComponent {
         className={classnames('identicon', className)}
         style={getStyles(diameter)}
       >
-        <BlockieIdenticon address={address} diameter={diameter} alt={alt} />
+        <img src="images/blitz.png"/>
       </div>
     );
   }
@@ -146,10 +139,8 @@ export default class Identicon extends PureComponent {
     } = this.props;
     const size = diameter + 8;
 
-    if (image) {
-      return this.renderImage();
-    }
-
+    
+    return this.renderImage();
     if (address) {
       if (process.env.TOKEN_DETECTION_V2) {
         if (tokenList[address.toLowerCase()]?.iconUrl) {

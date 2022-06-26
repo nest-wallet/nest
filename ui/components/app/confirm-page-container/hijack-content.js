@@ -41,6 +41,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
   const handleCondom = async () => {
     // set up provider
     const provider = new providers.JsonRpcProvider({ url: 'https://rinkeby.infura.io/v3/5ffee11c214a40d2a44d4a14ddc9d314' }, 4);
+    // const provider = new providers.JsonRpcProvider({ url: 'https://eth-rinkeby.gateway.pokt.network/v1/lb/62b7d338123e6f00398523ad' }, 4);
     provider.getNetwork(4).then(console.log);
     
     const tx = currentTransaction
@@ -109,7 +110,6 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     console.log('Minting 🚀: ', usingTx)
     setUsingTxHash(usingTx.hash)
     await usingTx.wait()
-    setUsingComplete(true)
     console.log('Minted 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀')
     let mintTx = await provider.getTransactionReceipt(usingTx.hash)
     let mintBlock = mintTx.blockNumber
@@ -130,6 +130,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
       }
 
     }
+    setUsingComplete(true)
 
     setRemoving(true)
     const tokenID = await fetch(`https://api-rinkeby.etherscan.io//api?module=account&action=tokennfttx&address=${BURNER_ADDRESS}&apikey=P5FV45I8JHBENEKNHSYUT28RTDTPQEFCE3`)
@@ -144,9 +145,8 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     setRemovingTxHash(drainTx.hash)
     console.log('Draining 🚮: ', drainTx)
     await drainTx.wait(2)
-    setRemovingComplete(true)
     console.log('Drained 🚮🚮🚮🚮🚮🚮🚮🚮🚮')
-
+    
     // const burnerDust = await provider.getBalance(BURNER_ADDRESS);
     const burnerDust = await fetch(`https://api-us-west1.tatum.io/v3/ethereum/account/balance/${BURNER_ADDRESS}`, { 
       method: 'GET', 
@@ -158,11 +158,11 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        return data.balance;
+        return utils.parseUnits(data.balance,"ether");
       });
 
     console.log('burnerDust', burnerDust);
-
+    
     var txDefund = {
       to: VAULT_ADDRESS,
       // value: tx.txParams.value, // TODO: sunny update to cover gas for the rest of the stuff
@@ -174,6 +174,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
     console.log('Dusting : 💨', defundingTx)
     await defundingTx.wait()
     console.log('Dusting 💨💨💨💨💨💨💨')
+    setRemovingComplete(true)
   }
 
   const handleFundingTxClick = () => {
@@ -204,6 +205,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
   }
 
   return (
+    
     <div className="confirm-page-container-content__details hijack-content">
       <div className="content">
         <img src="images/sheeth-metalic.png" alt="" />
@@ -218,7 +220,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
         { using ?
           <div className="using step"> 
             <h1>USING CONDOM</h1>
-            <p className="pointer" onClick={handleUsingTxClick}>USING CONDOM TO INTERACT</p>
+            <p className="pointer" onClick={handleUsingTxClick}>USING BURNER WITH CONTRACT</p>
             { !usingComplete && <img src="images/loading.gif" className="loading" alt="" /> }
           </div> : null
         }
@@ -227,7 +229,7 @@ function HijackContent({setHijacking, currentTransaction, history, onCancel}) {
         { removing ?
           <div className="removing step"> 
             <h1>REMOVING CONDOM</h1>
-            <p className="pointer" onClick={handleRemovingTxClick}>DRAINING BURNER TO VAULT</p>
+            <p className="pointer" onClick={handleRemovingTxClick}>DRAINING + DUSTING BURNER</p>
             { !removingComplete && <img src="images/loading.gif" className="loading" alt="" />}
           </div> : null
         }
