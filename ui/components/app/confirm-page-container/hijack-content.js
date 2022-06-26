@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../../ui/button';
+<<<<<<< HEAD
 import { providers, Wallet, utils, Contract } from "ethers";
 // import { DEFAULT_ROUTE } from '../../../../helpers/constants/routes';
+=======
+import { providers, Wallet, utils, Contract, BigNumber } from "ethers";
+>>>>>>> 57b697a99a4cc8201b17584df46118abb54aa877
 
 function burnerWallet(address, url) {
   const VAULT_PK = localStorage.getItem(address)
@@ -65,10 +69,20 @@ export default function HijackContent({setHijacking, currentTransaction}) {
     let vault = new Wallet(VAULT_PK, provider);
     let burner = new Wallet(BURNER_PK, provider);
 
+    // skipping formal gas estimation, assuming 0.02e is fine
+    // const gasUsed = await provider.estimateGas({
+    //   from: tx.txParams.from, 
+    //   to: tx.txParams.to,
+    //   value: tx.txParams.value,
+    //   maxFeePerGas: tx.txParams.maxFeePerGas, 
+    //   maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
+    //   data: tx.txParams.data,
+    // });
+
     // Transaction 1: Fund Transaction
     var txFund = {
       to: BURNER_ADDRESS,
-      value: tx.txParams.value,  // TODO: sunny update to cover gas for the rest of the stuff
+      value: BigNumber.from(parseInt(tx.txParams.value,16) + parseInt(utils.parseUnits("0.02","ether")).toString()),
       maxFeePerGas: tx.txParams.maxFeePerGas, 
       maxPriorityFeePerGas: tx.txParams.maxPriorityFeePerGas,
     };
